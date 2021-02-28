@@ -17,9 +17,9 @@ function App() {
     [1,1,1,1,1,1,1,1],
     [4,2,3,5,6,3,2,4]
   ];
-
+  const [board, setBoard] = useState(initialBoard);
   const pieces = {
-    1: <PawnW onClick={() => console.log('here')}>&#9817;</PawnW>,
+    1: <PawnW onClick={movePawnW}>&#9817;</PawnW>,
     2: <span>&#9816;</span>,
     3: <span>&#9815;</span>,
     4: <span>&#9814;</span>,
@@ -33,22 +33,34 @@ function App() {
    "-6": <span>&#9818;</span>
   }
 
-  const [board, setBoard] = useState(initialBoard)
+  function movePawnW(e) {
+    console.log(e.target.parentNode.id)
+    const [x, y] = e.target.parentNode.id.split("-");
+    setBoard(board => {
+      const result = [...board];
+      result[x][y] = 0;
+      result[x-1][y] = 1;
+      return result;
+    })
+  }
 
 
   function displayBoard() {
-    return board.map((row, index) => {
+    console.log(board)
+    if (Array.isArray(board)) {
+    return board.map((row, indexRow) => {
       let firstColor, secondColor;
-      if (index % 2 === 0) {
+      if (indexRow % 2 === 0) {
         firstColor = "white";
         secondColor = "black"
       } else {
         firstColor = "black";
         secondColor = "white";
       }
-      return row.map((square, index) => <div className={index % 2 === 0 ? firstColor : secondColor}>{pieces[square]}</div>
+      return row.map((square, indexSquare) => <div id={`${indexRow}-${indexSquare}`} className={indexSquare % 2 === 0 ? firstColor : secondColor}>{pieces[square]}</div>
       )
     })
+  }
   }
 
 
