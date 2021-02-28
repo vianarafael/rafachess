@@ -1,84 +1,61 @@
 
-import './App.css';
-import { Pw } from './piecesStyles'
+import './App.css'
+import { PawnW } from './piecesStyles'
+import { useState } from 'react'
+
+
+
 function App() {
+
+  const initialBoard = [
+    [-4,-2,-3,-5,-6,-3,-2,-4],
+    [-1,-1,-1,-1,-1,-1,-1,-1],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [1,1,1,1,1,1,1,1],
+    [4,2,3,5,6,3,2,4]
+  ];
+
+  const pieces = {
+    1: <PawnW onClick={() => console.log('here')}>&#9817;</PawnW>,
+    2: <span>&#9816;</span>,
+    3: <span>&#9815;</span>,
+    4: <span>&#9814;</span>,
+    5: <span>&#9813;</span>,
+    6: <span>&#9812;</span>,
+    "-1": <span>&#9823;</span>,
+    "-2": <span>&#9822;</span>,
+    "-3": <span>&#9821;</span>,
+   "-4": <span>&#9820;</span>,
+   "-5": <span>&#9819;</span>,
+   "-6": <span>&#9818;</span>
+  }
+
+  const [board, setBoard] = useState(initialBoard)
+
+
+  function displayBoard() {
+    return board.map((row, index) => {
+      let firstColor, secondColor;
+      if (index % 2 === 0) {
+        firstColor = "white";
+        secondColor = "black"
+      } else {
+        firstColor = "black";
+        secondColor = "white";
+      }
+      return row.map((square, index) => <div className={index % 2 === 0 ? firstColor : secondColor}>{pieces[square]}</div>
+      )
+    })
+  }
+
+
+
   return (
     <div className="chessboard">
-       {/* 1st  */}
-      <div className="white">&#9820;</div>
-      <div className="black">&#9822;</div>
-      <div className="white">&#9821;</div>
-      <div className="black">&#9819;</div>
-      <div className="white">&#9818;</div>
-      <div className="black">&#9821;</div>
-      <div className="white">&#9822;</div>
-      <div className="black">&#9820;</div>
-       {/* 2nd  */}
-      <div className="black">&#9823;</div>
-      <div className="white">&#9823;</div>
-      <div className="black">&#9823;</div>
-      <div className="white">&#9823;</div>
-      <div className="black">&#9823;</div>
-      <div className="white">&#9823;</div>
-      <div className="black">&#9823;</div>
-      <div className="white">&#9823;</div>
-       {/* 3th  */}
-      <div className="white"></div>
-      <div className="black"></div>
-      <div className="white"></div>
-      <div className="black"></div>
-      <div className="white"></div>
-      <div className="black"></div>
-      <div className="white"></div>
-      <div className="black"></div>
-       {/* 4st  */}
-      <div className="black"></div>
-      <div className="white"></div>
-      <div className="black"></div>
-      <div className="white"></div>
-      <div className="black"></div>
-      <div className="white"></div>
-      <div className="black"></div>
-      <div className="white"></div>
-       {/* 5th  */}
-      <div className="white"></div>
-      <div className="black"></div>
-      <div className="white"></div>
-      <div className="black"></div>
-      <div className="white"></div>
-      <div className="black"></div>
-      <div className="white"></div>
-      <div className="black"></div>
-       {/* 6th  */}
-      <div className="black"></div>
-      <div className="white"></div>
-      <div className="black"></div>
-      <div className="white"></div>
-      <div className="black"></div>
-      <div className="white"></div>
-      <div className="black"></div>
-      <div className="white"></div>
-      {/* 7th */}
-      <div className="white"><Pw onClick={(e) => {
-        e.target.classList.toggle("selected");
-        console.log("u")
-      }}>&#9817;</Pw></div>
-      <div className="black">&#9817;</div>
-      <div className="white">&#9817;</div>
-      <div className="black">&#9817;</div>
-      <div className="white">&#9817;</div>
-      <div className="black">&#9817;</div>
-      <div className="white">&#9817;</div>
-      <div className="black">&#9817;</div>
-      {/*  8th  */}
-      <div className="black">&#9814;</div>
-      <div className="white">&#9816;</div>
-      <div className="black">&#9815;</div>
-      <div className="white">&#9813;</div>
-      <div className="black">&#9812;</div>
-      <div className="white">&#9815;</div>
-      <div className="black">&#9816;</div>
-      <div className="white">&#9814;</div>
+      {displayBoard()}
     </div>
   );
 }
