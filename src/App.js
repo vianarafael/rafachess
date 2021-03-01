@@ -40,8 +40,9 @@ function App() {
 
   function updateBoard(x, y) {
     setBoard(board => {
-      const result = [...board];
+      const result = [...board]
       board[x][y] = 1;
+      result.map((row, rowIndex) => row.map((square, squareIndex) => square === "?" ? board[rowIndex][squareIndex] = 0 : square))
       return result;
     })
   }
