@@ -48,14 +48,14 @@ function App() {
   }
 
   function selectOptions(x, y, [walkOne, walkTwo, killLeft, killRight]) {
-
+    console.log(killLeft, killRight)
       setBoard(board => {
       const result = [...board];
       result[x][y] = 0;
       if (walkOne) result[x-1][y] = "?";
       if (walkTwo) result[x-2][y] = "?";
       if (killLeft) result[x-1][y-1] = "?";
-      if (killRight) result[x-1][y+1] = "?";
+      if (killRight) result[x-1][Number(y)+1] = "?";
       return result;
     })
   }
@@ -77,14 +77,14 @@ function App() {
     }
     
     // 1.3 If enemy on the diagonal can kill it
-    if(board[x-1][y+1] < 0) {
+    console.log('here',board[x-1][Number(y)+1], Number(y)+1)
+    if(board[x-1][Number(y)+1] < 0) {
       killRight = true
     }
 
     if(board[x-1][y-1] < 0) {
       killLeft = true
     }
-    console.log(x,y,walkOne, walkTwo, killLeft, killRight)
     selectOptions(x, y, [walkOne, walkTwo, killLeft, killRight])
   }
 
@@ -100,7 +100,6 @@ function App() {
 
 
   function displayBoard() {
-    console.log(board)
     if (Array.isArray(board)) {
     return board.map((row, indexRow) => {
       let firstColor, secondColor;
