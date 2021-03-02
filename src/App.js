@@ -62,7 +62,6 @@ function App() {
   }
 
   function selectOptions(x, y, [walkOne, walkTwo, killLeft, killRight], color) {
-    console.log(color)
       if (color === "white") {
       setBoard(board => {
         const result = [...board];
@@ -109,12 +108,12 @@ function App() {
         }
         // 1.2 If first move - can walk 2
     
-        if (Number(x) === 6) {
+        if (x === 6) {
           walkTwo = true;
         }
         
         // 1.3 If enemy on the diagonal can kill it
-        if(board[x-1][Number(y)+1] < 0) {
+        if(board[x-1][y+1] < 0) {
           killRight = true
         }
     
@@ -122,7 +121,6 @@ function App() {
           killLeft = true
         }
       }  else {
-        console.log("I am black")
       if (x === 7) {
           // figure out that logic latter
           console.log('change pieces')
@@ -130,7 +128,7 @@ function App() {
     
         // 1.1 If front is free (x-1 = 0)- can select x-1
         if (board[x+1][y] === 0) {
-          // make it blue and clickable 
+          // make it clickable 
           walkOne = true;
         }
         // 1.2 If first move - can walk 2
@@ -141,11 +139,11 @@ function App() {
         
         // 1.3 If enemy on the diagonal can kill it
     
-        if (board[x+1][y-1] >= 0) {
+        if (board[x+1][y-1] > 0) {
           killRight = true
         }
     
-        if (board[x+1][y+1] >= 0) {
+        if (board[x+1][y+1] > 0) {
           killLeft = true
       }
     }
