@@ -1,11 +1,10 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
-export const PawnW = styled.span`
-    cursor: pointer;
-    &.selected {
-        border: 1px #40E0D0 solid;
-    }
-`
+export const Piece = styled.span`
+  cursor: pointer;
+  &.selected {
+    border: 1px #40e0d0 solid;
+  }
+`;
 
-
-
+export const Knight = styled.span``;
