@@ -203,13 +203,33 @@ function App() {
     setSelectedPiece("pawn");
     pawnOptions(x, y, color);
   }
-  function selectOptionsKnight(x, y, [upLeft, upRight], color) {
+  function selectOptionsKnight(
+    x,
+    y,
+    [
+      upLeft,
+      upRight,
+      leftUp,
+      leftDown,
+      rightUp,
+      rightDown,
+      downLeft,
+      downRight,
+    ],
+    color
+  ) {
     if (color === "white") {
       setBoard((board) => {
         const result = [...board];
         result[x][y] = 0;
         if (upLeft) result[x - 2][y - 1] = "?";
         if (upRight) result[x - 2][y + 1] = "?";
+        if (leftUp) result[x + 1][y - 2] = "?";
+        if (leftDown) result[x - 1][y - 2] = "?";
+        if (rightUp) result[x - 1][y + 2] = "?";
+        if (rightDown) result[x + 1][y + 2] = "?";
+        if (downLeft) result[x + 2][y - 1] = "?";
+        if (downRight) result[x + 2][y + 1] = "?";
         return result;
       });
     }
@@ -217,8 +237,15 @@ function App() {
   function knightOptions(x, y, color) {
     x = Number(x);
     y = Number(y);
-    let upLeft, upRight;
-    // opening option
+    let upLeft = false;
+    let upRight = false;
+    let leftUp = false;
+    let leftDown = false;
+    let rightUp = false;
+    let rightDown = false;
+    let downLeft = false;
+    let downRight = false;
+
     if (color === "white") {
       if (board[x - 2][y - 1] <= 0) {
         upLeft = true;
@@ -227,8 +254,45 @@ function App() {
       if (board[x - 2][y + 1] <= 0) {
         upRight = true;
       }
+      // hacky
+      if (x + 1 < 8 && y - 2 > -1 && board[x + 1][y - 2] <= 0) {
+        leftUp = true;
+      }
+
+      if (board[x - 1][y - 2] <= 0) {
+        leftDown = true;
+      }
+
+      if (board[x - 1][y + 2] <= 0) {
+        rightUp = true;
+      }
+      // hacky
+      if (x + 1 < 8 && board[x + 1][y + 2] <= 0) {
+        rightDown = true;
+      }
+      if (x + 2 < 8 && board[x + 2][y - 1] <= 0) {
+        downLeft = true;
+      }
+
+      if (x + 2 < 8 && board[x + 2][y + 1] <= 0) {
+        downRight = true;
+      }
     }
-    selectOptionsKnight(x, y, [upLeft, upRight], color);
+    selectOptionsKnight(
+      x,
+      y,
+      [
+        upLeft,
+        upRight,
+        leftUp,
+        leftDown,
+        rightUp,
+        rightDown,
+        downLeft,
+        downRight,
+      ],
+      color
+    );
   }
 
   function moveKnight(e, color) {
