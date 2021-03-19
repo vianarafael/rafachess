@@ -15,14 +15,20 @@ function App() {
   ];
   const [turn, setTurn] = useState("white");
   const [board, setBoard] = useState(initialBoard);
+  const [selectedPiece, setSelectedPiece] = useState(null);
+
   const pieces = {
     1: (
-      <Piece id="white" onClick={(e) => movePawn(e, "white")}>
+      <Piece id="white" className="pawn" onClick={(e) => movePawn(e, "white")}>
         &#9817;
       </Piece>
     ),
     2: (
-      <Piece id="white" onClick={(e) => moveKnight(e, "white")}>
+      <Piece
+        id="white"
+        className="knight"
+        onClick={(e) => moveKnight(e, "white")}
+      >
         &#9816;
       </Piece>
     ),
@@ -45,6 +51,7 @@ function App() {
         className="selectable"
         onClick={(e) => {
           const [x, y] = e.target.parentNode.id.split("-");
+
           updateBoardW(x, y);
         }}
       >
@@ -67,7 +74,14 @@ function App() {
   function updateBoardW(x, y) {
     setBoard((board) => {
       const result = [...board];
-      board[x][y] = 1;
+      switch (selectedPiece) {
+        case "pawn":
+          board[x][y] = 1;
+          break;
+        case "knight":
+          board[x][y] = 2;
+      }
+
       result.map((row, rowIndex) =>
         row.map((square, squareIndex) =>
           square === "?" ? (board[rowIndex][squareIndex] = 0) : square
@@ -90,7 +104,12 @@ function App() {
     });
   }
 
-  function selectOptions(x, y, [walkOne, walkTwo, killLeft, killRight], color) {
+  function selectOptionsPawn(
+    x,
+    y,
+    [walkOne, walkTwo, killLeft, killRight],
+    color
+  ) {
     if (color === "white") {
       setBoard((board) => {
         const result = [...board];
@@ -176,25 +195,45 @@ function App() {
       }
     }
 
-    selectOptions(x, y, [walkOne, walkTwo, killLeft, killRight], color);
+    selectOptionsPawn(x, y, [walkOne, walkTwo, killLeft, killRight], color);
   }
 
   function movePawn(e, color) {
     const [x, y] = e.target.parentNode.id.split("-");
+    setSelectedPiece("pawn");
     pawnOptions(x, y, color);
   }
-  function selectOptionsKnight() {}
+  function selectOptionsKnight(x, y, [upLeft, upRight], color) {
+    if (color === "white") {
+      setBoard((board) => {
+        const result = [...board];
+        result[x][y] = 0;
+        if (upLeft) result[x - 2][y - 1] = "?";
+        if (upRight) result[x - 2][y + 1] = "?";
+        return result;
+      });
+    }
+  }
   function knightOptions(x, y, color) {
     x = Number(x);
     y = Number(y);
+    let upLeft, upRight;
     // opening option
-    let upLeft = true;
-    let upRight = true;
+    if (color === "white") {
+      if (board[x - 2][y - 1] <= 0) {
+        upLeft = true;
+      }
+
+      if (board[x - 2][y + 1] <= 0) {
+        upRight = true;
+      }
+    }
     selectOptionsKnight(x, y, [upLeft, upRight], color);
   }
 
   function moveKnight(e, color) {
     const [x, y] = e.target.parentNode.id.split("-");
+    setSelectedPiece("knight");
     knightOptions(x, y, color);
   }
 
