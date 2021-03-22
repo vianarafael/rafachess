@@ -41,7 +41,15 @@ function App() {
         &#9823;
       </Piece>
     ),
-    "-2": <span>&#9822;</span>,
+    "-2": (
+      <Piece
+        id="white"
+        className="knight"
+        onClick={(e) => moveKnight(e, "black")}
+      >
+        &#9822;
+      </Piece>
+    ),
     "-3": <span>&#9821;</span>,
     "-4": <span>&#9820;</span>,
     "-5": <span>&#9819;</span>,
@@ -94,7 +102,13 @@ function App() {
   function updateBoardB(x, y) {
     setBoard((board) => {
       const result = [...board];
-      board[x][y] = -1;
+            switch (selectedPiece) {
+              case "pawn":
+                board[x][y] = -1;
+                break;
+              case "knight":
+                board[x][y] = -2;
+            }
       result.map((row, rowIndex) =>
         row.map((square, squareIndex) =>
           square === "!" ? (board[rowIndex][squareIndex] = 0) : square
@@ -232,6 +246,22 @@ function App() {
         if (downRight) result[x + 2][y + 1] = "?";
         return result;
       });
+    } else
+    {
+          setBoard((board) => {
+            const result = [...board];
+            result[x][y] = 0;
+            if (upLeft) result[x + 2][y + 1] = "!";
+            if (upRight) result[x + 2][y - 1] = "!";
+            if (leftUp) result[x - 1][y + 2] = "!";
+            if (leftDown) result[x + 1][y + 2] = "!";
+            if (rightUp) result[x + 1][y - 2] = "!";
+            if (rightDown) result[x - 1][y - 2] = "!";
+            if (downLeft) result[x - 2][y + 1] = "!";
+            if (downRight) result[x - 2][y - 1] = "!";
+            return result;
+          });
+
     }
   }
   function knightOptions(x, y, color) {
@@ -246,35 +276,84 @@ function App() {
     let downLeft = false;
     let downRight = false;
 
-    if (color === "white") {
-      if (board[x - 2][y - 1] <= 0) {
+    if (color === "white")
+    {
+      if (board[x - 2][y - 1] <= 0)
+      {
         upLeft = true;
       }
 
-      if (board[x - 2][y + 1] <= 0) {
+      if (board[x - 2][y + 1] <= 0)
+      {
         upRight = true;
       }
       // hacky
-      if (x + 1 < 8 && y - 2 > -1 && board[x + 1][y - 2] <= 0) {
+      if (x + 1 < 8 && y - 2 > -1 && board[x + 1][y - 2] <= 0)
+      {
         leftUp = true;
       }
 
-      if (board[x - 1][y - 2] <= 0) {
+      if (board[x - 1][y - 2] <= 0)
+      {
         leftDown = true;
       }
 
-      if (board[x - 1][y + 2] <= 0) {
+      if (board[x - 1][y + 2] <= 0)
+      {
         rightUp = true;
       }
       // hacky
-      if (x + 1 < 8 && board[x + 1][y + 2] <= 0) {
+      if (x + 1 < 8 && board[x + 1][y + 2] <= 0)
+      {
         rightDown = true;
       }
-      if (x + 2 < 8 && board[x + 2][y - 1] <= 0) {
+      if (x + 2 < 8 && board[x + 2][y - 1] <= 0)
+      {
         downLeft = true;
       }
 
-      if (x + 2 < 8 && board[x + 2][y + 1] <= 0) {
+      if (x + 2 < 8 && board[x + 2][y + 1] <= 0)
+      {
+        downRight = true;
+      }
+    } else
+    {
+      if (board[x + 2][y + 1] >= 0)
+      {
+        upLeft = true;
+      }
+
+      if (board[x + 2][y - 1] >= 0)
+      {
+        upRight = true;
+      }
+      // hacky
+      console.log(x, y)
+      if ( x - 1 > 0 && board[x - 1][y + 2] >= 0)
+      {
+        leftUp = true;
+      }
+
+      if (board[x + 1][y + 2] >= 0)
+      {
+        leftDown = true;
+      }
+
+      if (board[x + 1][y - 2] >= 0)
+      {
+        rightUp = true;
+      }
+      // hacky
+      if (x - 1 > 0 && board[x - 1][y - 2] >= 0)
+      {
+        rightDown = true;
+      }
+      if (x -2 > 0 && board[x - 2][y + 1] >= 0)
+      {
+        downLeft = true;
+      }
+
+      if (x - 2 > 0 && board[x - 2][y - 1] >= 0) {
         downRight = true;
       }
     }
