@@ -278,82 +278,82 @@ function App() {
 
     if (color === "white")
     {
-      if (board[x - 2][y - 1] <= 0)
+      console.log(x-2)
+      if ( x - 2 >= 0 && y - 1 >=0 && board[x - 2][y - 1] <= 0)
       {
         upLeft = true;
       }
 
-      if (board[x - 2][y + 1] <= 0)
-      {
+      if (x - 2 >= 0 && y+1 < 8 && board[x - 2][y + 1] <= 0) {
         upRight = true;
       }
-      // hacky
-      if (x + 1 < 8 && y - 2 > -1 && board[x + 1][y - 2] <= 0)
+      
+      if (x + 1 < 8 && y - 2 >= 0 && board[x + 1][y - 2] <= 0)
       {
         leftUp = true;
       }
 
-      if (board[x - 1][y - 2] <= 0)
+      if (x - 1 >= 0 && y - 2 >= 0 && board[x - 1][y - 2] <= 0)
       {
         leftDown = true;
       }
 
-      if (board[x - 1][y + 2] <= 0)
+      if ( x - 1 >= 0 && y + 2 < 8 && board[x - 1][y + 2] <= 0)
       {
         rightUp = true;
       }
-      // hacky
-      if (x + 1 < 8 && board[x + 1][y + 2] <= 0)
+      
+      if (x + 1 < 8 && y + 2 < 8 && board[x + 1][y + 2] <= 0)
       {
         rightDown = true;
       }
-      if (x + 2 < 8 && board[x + 2][y - 1] <= 0)
+      
+      if (x + 2 < 8 && y -1 >= 0 && board[x + 2][y - 1] <= 0)
       {
         downLeft = true;
       }
 
-      if (x + 2 < 8 && board[x + 2][y + 1] <= 0)
+      if (x + 2 < 8 && y + 1 < 8 &&  board[x + 2][y + 1] <= 0)
       {
         downRight = true;
       }
     } else
     {
-      if (board[x + 2][y + 1] >= 0)
+      if (x + 2 < 8 && y + 1 < 8 &&  board[x + 2][y + 1] >= 0)
       {
         upLeft = true;
       }
 
-      if (board[x + 2][y - 1] >= 0)
+      if (x + 2 < 8 && y - 1 >= 0 && board[x + 2][y - 1] >= 0)
       {
         upRight = true;
       }
       // hacky
-      console.log(x, y)
-      if ( x - 1 > 0 && board[x - 1][y + 2] >= 0)
+      if ( x - 1 >= 0 &&  y + 2 < 8 && board[x - 1][y + 2] >= 0)
       {
         leftUp = true;
       }
 
-      if (board[x + 1][y + 2] >= 0)
+      if (x + 1 < 8 && y + 2 < 8 && board[x + 1][y + 2] >= 0)
       {
         leftDown = true;
       }
 
-      if (board[x + 1][y - 2] >= 0)
+      if (x + 1 < 8 &&  y - 2 >= 0 && board[x + 1][y - 2] >= 0)
       {
         rightUp = true;
       }
-      // hacky
-      if (x - 1 > 0 && board[x - 1][y - 2] >= 0)
+      
+      if (x - 1 >= 0 && y - 2 >= 0 && board[x - 1][y - 2] >= 0)
       {
         rightDown = true;
       }
-      if (x -2 > 0 && board[x - 2][y + 1] >= 0)
+      if (x -2 > 0 && y + 1 < 8 && board[x - 2][y + 1] >= 0)
       {
         downLeft = true;
       }
 
-      if (x - 2 > 0 && board[x - 2][y - 1] >= 0) {
+      if (x - 2 >= 0 && y - 1 >=0 && board[x - 2][y - 1] >= 0) {
         downRight = true;
       }
     }
