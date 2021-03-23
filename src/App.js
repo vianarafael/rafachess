@@ -1,11 +1,9 @@
 import "./App.css";
 import { Piece } from "./piecesStyles";
-import { useState, createContext } from "react";
+import { useState, createContext, useReducer } from "react";
 import Pawn from './piecesLogic/pawn'
 
 export const BoardContext = createContext()
-
-function App() {
   const initialBoard = [
     [-4, -2, -3, -5, -6, -3, -2, -4],
     [-1, -1, -1, -1, -1, -1, -1, -1],
@@ -16,20 +14,44 @@ function App() {
     [1, 1, 1, 1, 1, 1, 1, 1],
     [4, 2, 3, 5, 6, 3, 2, 4],
   ];
+  //erase this
+let selectedPiece = 'pawn'
+  let setBoard = () => console.log('set board')
+const reducer = (state, action) =>
+{
+  switch (action.type) {
+    case "setOptionsW":
+      return action.payload;
+    //   ((x, y) => {
+    //   const result = [...state];
+    //   switch (selectedPiece) {
+    //     case "pawn":
+    //       state[x][y] = 1;
+    //       break;
+    //     case "knight":
+    //       state[x][y] = 2;
+    //   }
+    //   result.map((row, rowIndex) =>
+    //     row.map((square, squareIndex) =>
+    //       square === "?" ? (state[rowIndex][squareIndex] = 0) : square
+    //     )
+    //   );
+    //   return result;
+    // })()
+  }
+}
+  
+  
+function App() {
+  const [board, dispatch] = useReducer(reducer, initialBoard)
   const [turn, setTurn] = useState("white");
-  const [board, setBoard] = useState(initialBoard);
   const [selectedPiece, setSelectedPiece] = useState(null);
  
 
   const pieces = {
-    1: (
-      <Pawn />
-    ),
+    1: <Pawn color="white" />,
     2: (
-      <Piece
-        className="knight"
-        onClick={(e) => moveKnight(e, "white")}
-      >
+      <Piece className="knight" onClick={(e) => moveKnight(e, "white")}>
         &#9816;
       </Piece>
     ),
@@ -38,20 +60,16 @@ function App() {
     5: <span>&#9813;</span>,
     6: <span>&#9812;</span>,
     "-1": (
-      <Piece onClick={(e) => { 
-       
-        // movePawn(e, "black")
-  }}>
-        &#9823;
-      </Piece>
+      <Pawn color="black" />
+      //     <Piece onClick={(e) => {
+
+      //       // movePawn(e, "black")
+      // }}>
+      //       &#9823;
+      //     </Piece>
     ),
     "-2": (
-      <Piece
-        className="knight"
-        onClick={(e) =>
-          moveKnight(e, "black")
-        }
-      >
+      <Piece className="knight" onClick={(e) => moveKnight(e, "black")}>
         &#9822;
       </Piece>
     ),
@@ -62,8 +80,7 @@ function App() {
     "?": (
       <span
         className="selectable"
-        onClick={(e) =>
-        {
+        onClick={(e) => {
           const [x, y] = e.target.parentNode.id.split("-");
           updateBoardW(x, y);
         }}
@@ -309,9 +326,9 @@ function App() {
       });
     }
   }
-
+ 
   return (
-    <BoardContext.Provider value={board}>
+    <BoardContext.Provider value={{board, setBoard: dispatch}}>
       <div className="chessboard">{displayBoard()}</div>
     </BoardContext.Provider>
   );

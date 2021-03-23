@@ -4,36 +4,53 @@ import { BoardContext } from '../App'
 
 
 
-function Pawn()
+function Pawn({color})
 {
-  const board = useContext(BoardContext)
-  
+  const {board, setBoard} = useContext(BoardContext)
+ 
   function selectOptionsPawn(
     x,
     y,
     [walkOne, walkTwo, killLeft, killRight],
     color
-  ) {
+  )
+  {
+    console.log(color)
     if (color === "white") {
-      setBoard((board) => {
-        const result = [...board];
-        result[x][y] = 0;
-        if (walkOne) result[x - 1][y] = "?";
-        if (walkTwo) result[x - 2][y] = "?";
-        if (killLeft) result[x - 1][y - 1] = "?";
-        if (killRight) result[x - 1][Number(y) + 1] = "?";
-        return result;
-      });
+      // setBoard({
+      //   type: 'updateW', payload: (board) =>
+      //   {
+      //     console.log('here;,', board)
+      //     const result = [...board];
+      //     result[x][y] = 0;
+      //     if (walkOne) result[x - 1][y] = "?";
+      //     if (walkTwo) result[x - 2][y] = "?";
+      //     if (killLeft) result[x - 1][y - 1] = "?";
+      //     if (killRight) result[x - 1][Number(y) + 1] = "?";
+      //     return result;
+      //   }
+      // });
+      // experiment
+      const optionsBoard = [...board];
+      optionsBoard[x][y] = 0;
+      if (walkOne) optionsBoard[x - 1][y] = "?";
+          if (walkTwo) optionsBoard[x - 2][y] = "?";
+          if (killLeft) optionsBoard[x - 1][y - 1] = "?";
+          if (killRight) optionsBoard[x - 1][Number(y) + 1] = "?";
+          
+        
+      setBoard({ type: "setOptionsW", payload: optionsBoard });
+  
     } else {
-      setBoard((board) => {
-        const result = [...board];
-        result[x][y] = 0;
-        if (walkOne) result[x + 1][y] = "!";
-        if (walkTwo) result[x + 2][y] = "!";
-        if (killLeft) result[x + 1][Number(y) + 1] = "!";
-        if (killRight) result[x + 1][Number(y) - 1] = "!";
-        return result;
-      });
+        console.log('confirm color', color)
+        const optionsBoard = [...board];
+        optionsBoard[x][y] = 0;
+        if (walkOne) optionsBoard[x + 1][y] = "!";
+        if (walkTwo) optionsBoard[x + 2][y] = "!";
+        if (killLeft) optionsBoard[x + 1][Number(y) + 1] = "!";
+        if (killRight) optionsBoard[x + 1][Number(y) - 1] = "!";
+        setBoard({ type: "setOptionsW", payload: optionsBoard });
+   
     }
   }
 
@@ -46,12 +63,14 @@ function Pawn()
     let killLeft = false;
     let killRight = false;
 
-    if (color === "white") {
+    if (color === "white")
+    {
+      console.log(board, x, y);
       if (x === 0) {
         // figure out that logic latter
         console.log("change pieces");
       }
-
+      
       // 1.1 If front is free (x-1 = 0)- can select x-1
       if (board[x - 1][y] === 0) {
         // make it blue and clickable
@@ -103,23 +122,24 @@ function Pawn()
       x,
       y,
       [walkOne, walkTwo, killLeft, killRight],
-      color,
-      board,
-      setBoard
+      color
     );
   }
 
-  function movePawn(e, color) {
-    const [x, y] = e.target.parentNode.id.split("-");
+  function movePawn(e, color)
+  {
+    
+    const [x, y] = e.target.parentNode.parentNode.id.split("-");
+    console.log(e.target.parentNode.parentNode)
     //   setSelectedPiece("pawn");
-    pawnOptions(x, y, color, board, setBoard);
+
+    pawnOptions(x, y, color);
   }
 
     
-    console.log('a')
   return (
-    <Piece className="pawn" onClick={(e) => movePawn(e, "white")}>
-      &#9817;
+    <Piece className="pawn" onClick={(e) => movePawn(e, color)}>
+      {color === "white" ? <span>&#9817;</span> : <span>&#9823;</span>}
     </Piece>
   );
 }
