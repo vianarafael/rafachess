@@ -2,6 +2,7 @@ import "./App.css";
 import { Piece } from "./piecesStyles";
 import { useState, createContext, useReducer } from "react";
 import Pawn from './piecesLogic/pawn'
+import selectMove from './piecesLogic/selectMove'
 
 export const BoardContext = createContext()
   const initialBoard = [
@@ -20,7 +21,7 @@ let selectedPiece = 'pawn'
 const reducer = (state, action) =>
 {
   switch (action.type) {
-    case "setOptionsW":
+    case "setOptions":
       return action.payload;
     //   ((x, y) => {
     //   const result = [...state];
@@ -61,12 +62,6 @@ function App() {
     6: <span>&#9812;</span>,
     "-1": (
       <Pawn color="black" />
-      //     <Piece onClick={(e) => {
-
-      //       // movePawn(e, "black")
-      // }}>
-      //       &#9823;
-      //     </Piece>
     ),
     "-2": (
       <Piece className="knight" onClick={(e) => moveKnight(e, "black")}>
@@ -80,10 +75,9 @@ function App() {
     "?": (
       <span
         className="selectable"
-        onClick={(e) => {
-          const [x, y] = e.target.parentNode.id.split("-");
-          updateBoardW(x, y);
-        }}
+        // set selected piece - piece + color
+        // get the board before options
+        onClick={(e) => selectMove(e, [[0]], {piece="pawn", color="white"})}
       >
         &#8855;
       </span>

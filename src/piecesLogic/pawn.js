@@ -11,26 +11,10 @@ function Pawn({color})
   function selectOptionsPawn(
     x,
     y,
-    [walkOne, walkTwo, killLeft, killRight],
-    color
+    [walkOne, walkTwo, killLeft, killRight]
   )
   {
-    console.log(color)
     if (color === "white") {
-      // setBoard({
-      //   type: 'updateW', payload: (board) =>
-      //   {
-      //     console.log('here;,', board)
-      //     const result = [...board];
-      //     result[x][y] = 0;
-      //     if (walkOne) result[x - 1][y] = "?";
-      //     if (walkTwo) result[x - 2][y] = "?";
-      //     if (killLeft) result[x - 1][y - 1] = "?";
-      //     if (killRight) result[x - 1][Number(y) + 1] = "?";
-      //     return result;
-      //   }
-      // });
-      // experiment
       const optionsBoard = [...board];
       optionsBoard[x][y] = 0;
       if (walkOne) optionsBoard[x - 1][y] = "?";
@@ -39,22 +23,21 @@ function Pawn({color})
           if (killRight) optionsBoard[x - 1][Number(y) + 1] = "?";
           
         
-      setBoard({ type: "setOptionsW", payload: optionsBoard });
+      setBoard({ type: "setOptions", payload: optionsBoard });
   
     } else {
-        console.log('confirm color', color)
         const optionsBoard = [...board];
         optionsBoard[x][y] = 0;
         if (walkOne) optionsBoard[x + 1][y] = "!";
         if (walkTwo) optionsBoard[x + 2][y] = "!";
         if (killLeft) optionsBoard[x + 1][Number(y) + 1] = "!";
         if (killRight) optionsBoard[x + 1][Number(y) - 1] = "!";
-        setBoard({ type: "setOptionsW", payload: optionsBoard });
+        setBoard({ type: "setOptions", payload: optionsBoard });
    
     }
   }
 
-  function pawnOptions(x, y, color) {
+  function pawnOptions(x, y) {
     x = Number(x);
     y = Number(y);
     // 1. Choose location
@@ -121,24 +104,23 @@ function Pawn({color})
     selectOptionsPawn(
       x,
       y,
-      [walkOne, walkTwo, killLeft, killRight],
-      color
+      [walkOne, walkTwo, killLeft, killRight]
     );
   }
 
-  function movePawn(e, color)
+  function movePawn(e)
   {
     
     const [x, y] = e.target.parentNode.parentNode.id.split("-");
     console.log(e.target.parentNode.parentNode)
     //   setSelectedPiece("pawn");
 
-    pawnOptions(x, y, color);
+    pawnOptions(x, y);
   }
 
     
   return (
-    <Piece className="pawn" onClick={(e) => movePawn(e, color)}>
+    <Piece className="pawn" onClick={(e) => movePawn(e)}>
       {color === "white" ? <span>&#9817;</span> : <span>&#9823;</span>}
     </Piece>
   );
