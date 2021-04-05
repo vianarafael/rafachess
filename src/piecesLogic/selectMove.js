@@ -1,3 +1,7 @@
+const wPiece = {
+  pawn: 1
+}
+
 const selectMove = (e, prevBoard, selectedPiece, setBoard) =>
 {
     const [x, y] = e.target.parentNode.id.split("-");
@@ -9,8 +13,12 @@ const selectMove = (e, prevBoard, selectedPiece, setBoard) =>
           // And the location (I already have that)
         //   dispatch({ type: "setOptionsW", payload: "?" });
   // only works for
-  prevBoard[x][y] = 1
-  setBoard({type: "setOptions", payload: prevBoard});
+  if (selectedPiece.color === "white")
+  {
+          prevBoard[x][y] = wPiece[x][y];
+          setBoard({ type: "setOptions", payload: prevBoard });
+      }
+
 }
 
 
