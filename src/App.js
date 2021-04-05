@@ -52,19 +52,19 @@ const reducer = (state, action) =>
   }
 }
 
-const prevReducer = (state, action) =>
-{
-  switch (action.type)
-  {
-    case "setPreviousBoard":
-      return action.payload;
-  }
+// const prevReducer = (state, action) =>
+// {
+//   switch (action.type)
+//   {
+//     case "setPreviousBoard":
+//       return action.payload;
+//   }
   
-}
+// }
 function App()
   {
     const [board, dispatch] = useReducer(reducer, initialBoard)
-    const [prevBoard, prevDispatch] = useReducer(prevReducer, initialBoard)
+ 
     const [turn, setTurn] = useState("white");
     const [selectedPiece, setSelectedPiece] = useState(null);
   
@@ -96,7 +96,7 @@ function App()
           className="selectable"
           // set selected piece - piece + color
           // get the board before options
-          onClick={(e) => selectMove(e, prev, selectedPiece)}
+          onClick={(e) => selectMove(e, prev, selectedPiece, setBoard = dispatch)}
         >
           &#8855;
         </span>
@@ -359,7 +359,7 @@ function App()
     }
  
     return (
-      <BoardContext.Provider value={{ board, setBoard: dispatch, prevBoard, prevDispatch }}>
+      <BoardContext.Provider value={{ board, setBoard: dispatch }}>
         <div className="chessboard">{displayBoard()}</div>
       </BoardContext.Provider>
     );

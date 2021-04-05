@@ -121,6 +121,7 @@ function Pawn({color})
     {
      return arr.slice();
     });
+    prevBoard[x][y] = 0
     setBoard({ type: "setPreviousBoard", payload: prevBoard });
     setBoard({
       type: "setSelectedPiece", payload: { pice: "pawn", color}})
