@@ -1,12 +1,14 @@
+
 import { Piece } from '../piecesStyles'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { BoardContext } from '../App'
 
-
+  let selected = true;
 
 function Pawn({color})
 {
-  const {board, setBoard} = useContext(BoardContext)
+  
+  const { board, setBoard } = useContext(BoardContext)
  
   function selectOptionsPawn(
     x,
@@ -14,7 +16,8 @@ function Pawn({color})
     [walkOne, walkTwo, killLeft, killRight]
   )
   {
-    if (color === "white") {
+    if (color === "white")
+    {
       const optionsBoard = [...board];
       optionsBoard[x][y] = 0;
       if (walkOne) optionsBoard[x - 1][y] = "?";
@@ -24,6 +27,7 @@ function Pawn({color})
           
         
       setBoard({ type: "setOptions", payload: optionsBoard });
+      // setBoard({ type: "setPreviousBoard", payload: board})
   
     } else {
         const optionsBoard = [...board];
@@ -48,7 +52,6 @@ function Pawn({color})
 
     if (color === "white")
     {
-      console.log(board, x, y);
       if (x === 0) {
         // figure out that logic latter
         console.log("change pieces");
@@ -110,15 +113,20 @@ function Pawn({color})
 
   function movePawn(e)
   {
-    
+     selected = false
     const [x, y] = e.target.parentNode.parentNode.id.split("-");
     console.log(e.target.parentNode.parentNode)
     //   setSelectedPiece("pawn");
-
+    const prevBoard = board.map(function (arr)
+    {
+     return arr.slice();
+    });
+    setBoard({ type: "setPreviousBoard", payload: prevBoard });
+    setBoard({
+      type: "setSelectedPiece", payload: { pice: "pawn", color}})
     pawnOptions(x, y);
   }
 
-    
   return (
     <Piece className="pawn" onClick={(e) => movePawn(e)}>
       {color === "white" ? <span>&#9817;</span> : <span>&#9823;</span>}
