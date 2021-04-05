@@ -66,7 +66,7 @@ function App()
     const [board, dispatch] = useReducer(reducer, initialBoard)
  
     const [turn, setTurn] = useState("white");
-    const [selectedPiece, setSelectedPiece] = useState(null);
+    // const [selectedPiece, setSelectedPiece] = useState(null);
   
     const pieces = {
       1: <Pawn color="white" />,
@@ -142,7 +142,7 @@ function App()
       setBoard(() =>
       {
         const result = [...board];
-        switch (selectedPiece)
+        switch (selectedPiece.piece)
         {
           case "pawn":
             board[x][y] = -1;
@@ -325,7 +325,7 @@ function App()
     function moveKnight(e, color)
     {
       const [x, y] = e.target.parentNode.id.split("-");
-      setSelectedPiece("knight");
+      // setSelectedPiece("knight");
       knightOptions(x, y, color);
     
     }

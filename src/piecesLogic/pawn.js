@@ -124,7 +124,7 @@ function Pawn({color})
     prevBoard[x][y] = 0
     setBoard({ type: "setPreviousBoard", payload: prevBoard });
     setBoard({
-      type: "setSelectedPiece", payload: { pice: "pawn", color}})
+      type: "setSelectedPiece", payload: { piece: "pawn", color}})
     pawnOptions(x, y);
   }
 
