@@ -4,6 +4,7 @@ import { useState, createContext, useReducer } from "react";
 import selectMove from './piecesLogic/selectMove'
 import Pawn from './piecesLogic/pawn'
 import Knight from "./piecesLogic/knight"
+import Bishop from "./piecesLogic/bishop"
 
 export const BoardContext = createContext()
 
@@ -44,7 +45,7 @@ function App()
     const pieces = {
       1: <Pawn color="white" />,
       2: <Knight color="white" />,
-      3: <span>&#9815;</span>,
+      3: <Bishop color="white" />,
       4: <span>&#9814;</span>,
       5: <span>&#9813;</span>,
       6: <span>&#9812;</span>,
@@ -52,7 +53,7 @@ function App()
         <Pawn color="black" />
       ),
       "-2": <Knight color="black" />,
-      "-3": <span>&#9821;</span>,
+      "-3": <Bishop color="black" />,
       "-4": <span>&#9820;</span>,
       "-5": <span>&#9819;</span>,
       "-6": <span>&#9818;</span>,

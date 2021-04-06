@@ -3,8 +3,6 @@ import { Piece } from '../piecesStyles'
 import { useContext } from 'react'
 import { BoardContext } from '../App'
 
-
-
 function Pawn({color})
 {
   
@@ -26,7 +24,6 @@ function Pawn({color})
           
         
       setBoard({ type: "setOptions", payload: optionsBoard });
-      // setBoard({ type: "setPreviousBoard", payload: board})
   
     } else {
         const optionsBoard = [...board];
@@ -124,6 +121,7 @@ function Pawn({color})
     pawnOptions(x, y);
   }
 
+  
   return (
     <Piece className="pawn" onClick={(e) => {if (color === turn) movePawn(e)}}>
       {color === "white" ? <span>&#9817;</span> : <span>&#9823;</span>}
