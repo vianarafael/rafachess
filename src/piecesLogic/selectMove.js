@@ -18,13 +18,18 @@ const selectMove = (e, prevBoard, selectedPiece, setBoard) =>
       case "pawn":
         prevBoard[x][y] = 1;
         setBoard({ type: "setOptions", payload: prevBoard });
+      case "knight":
+        prevBoard[x][y] = 2;
+        setBoard({ type: "setOptions", payload: prevBoard });
     }
   } else
   {
-    switch (selectedPiece.piece)
-    {
+    switch (selectedPiece.piece) {
       case "pawn":
         prevBoard[x][y] = -1;
+        setBoard({ type: "setOptions", payload: prevBoard });
+      case "knight":
+        prevBoard[x][y] = -2;
         setBoard({ type: "setOptions", payload: prevBoard });
     }
     }

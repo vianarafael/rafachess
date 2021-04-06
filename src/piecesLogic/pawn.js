@@ -1,9 +1,9 @@
 
 import { Piece } from '../piecesStyles'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { BoardContext } from '../App'
 
-  let selected = true;
+
 
 function Pawn({color})
 {
@@ -113,10 +113,7 @@ function Pawn({color})
 
   function movePawn(e)
   {
-     selected = false
     const [x, y] = e.target.parentNode.parentNode.id.split("-");
-    console.log(e.target.parentNode.parentNode)
-    //   setSelectedPiece("pawn");
     const prevBoard = board.map(function (arr)
     {
      return arr.slice();
