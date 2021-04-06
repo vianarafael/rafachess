@@ -39,7 +39,6 @@ const reducer = (state, action) =>
 function App()
   {
     const [board, dispatch] = useReducer(reducer, initialBoard)
- 
     const [turn, setTurn] = useState("white");
   
     const pieces = {
@@ -62,7 +61,7 @@ function App()
           className="selectable"
           // set selected piece - piece + color
           // get the board before options
-          onClick={(e) => selectMove(e, prev, selectedPiece, setBoard = dispatch)}
+          onClick={(e) => selectMove(e, prev, selectedPiece, setBoard = dispatch, setTurn)}
         >
           &#8855;
         </span>
@@ -72,7 +71,7 @@ function App()
           className="selectable"
           onClick={(e) =>
           {
-            selectMove(e, prev, selectedPiece, setBoard = dispatch)
+            selectMove(e, prev, selectedPiece, setBoard = dispatch, setTurn)
           }}
         >
           &#8855;
@@ -110,7 +109,7 @@ function App()
     }
  
     return (
-      <BoardContext.Provider value={{ board, setBoard: dispatch }}>
+      <BoardContext.Provider value={{ board, setBoard: dispatch, turn, setTurn }}>
         <div className="chessboard">{displayBoard()}</div>
       </BoardContext.Provider>
     );

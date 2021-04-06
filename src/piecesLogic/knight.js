@@ -5,7 +5,7 @@ import { BoardContext } from "../App";
 const Knight =  ({ color }) =>
 {
 
-    const { board, setBoard } = useContext(BoardContext);
+    const { board, setBoard, turn, setTurn } = useContext(BoardContext);
 
         function selectOptionsKnight(
       x,
@@ -54,6 +54,7 @@ const Knight =  ({ color }) =>
         
 
       }
+        setTurn("transition");
     }
     function knightOptions(x, y)
     {
@@ -169,7 +170,7 @@ const Knight =  ({ color }) =>
 
     function moveKnight(e)
     {
-      const [x, y] = e.target.parentNode.parentNode.id.split("-");
+    const [x, y] = e.target.parentNode.parentNode.id.split("-");
     const prevBoard = board.map(function (arr) {
             return arr.slice();
     });
@@ -184,7 +185,7 @@ const Knight =  ({ color }) =>
     }
 
       return (
-    <Piece className="knight" onClick={(e) => moveKnight(e)}>
+    <Piece className="knight" onClick={(e) => {if (turn === color) moveKnight(e)}}>
       {color === "white" ? <span>&#9816;</span> : <span>&#9822;</span> }
     </Piece>
   );

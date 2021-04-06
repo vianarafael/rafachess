@@ -8,8 +8,7 @@ import { BoardContext } from '../App'
 function Pawn({color})
 {
   
-  const { board, setBoard } = useContext(BoardContext)
- 
+  const { board, setBoard, turn, setTurn } = useContext(BoardContext)
   function selectOptionsPawn(
     x,
     y,
@@ -37,8 +36,8 @@ function Pawn({color})
         if (killLeft) optionsBoard[x + 1][Number(y) + 1] = "!";
         if (killRight) optionsBoard[x + 1][Number(y) - 1] = "!";
         setBoard({ type: "setOptions", payload: optionsBoard });
-   
     }
+    setTurn("transition")
   }
 
   function pawnOptions(x, y) {
@@ -126,7 +125,7 @@ function Pawn({color})
   }
 
   return (
-    <Piece className="pawn" onClick={(e) => movePawn(e)}>
+    <Piece className="pawn" onClick={(e) => {if (color === turn) movePawn(e)}}>
       {color === "white" ? <span>&#9817;</span> : <span>&#9823;</span>}
     </Piece>
   );
