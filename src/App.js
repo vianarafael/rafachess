@@ -106,8 +106,7 @@ function App()
           className="selectable"
           onClick={(e) =>
           {
-            const [x, y] = e.target.parentNode.id.split("-");
-            updateBoardB(x, y);
+            selectMove(e, prev, selectedPiece, setBoard = dispatch)
           }}
         >
           &#8855;

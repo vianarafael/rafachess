@@ -1,6 +1,4 @@
-const wPiece = {
-  pawn: 1
-}
+
 
 const selectMove = (e, prevBoard, selectedPiece, setBoard) =>
 {
@@ -19,6 +17,14 @@ const selectMove = (e, prevBoard, selectedPiece, setBoard) =>
     switch (selectedPiece.piece) {
       case "pawn":
         prevBoard[x][y] = 1;
+        setBoard({ type: "setOptions", payload: prevBoard });
+    }
+  } else
+  {
+    switch (selectedPiece.piece)
+    {
+      case "pawn":
+        prevBoard[x][y] = -1;
         setBoard({ type: "setOptions", payload: prevBoard });
     }
     }
