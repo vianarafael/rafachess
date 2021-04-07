@@ -30,24 +30,46 @@ function Bishop({ color })
       let tempY = y;
 
       let leftUp = [];
-        let count = 1;
-        console.log(board[tempX - 1][tempY - 1]);
+  
+      
       while ((tempX - 1) > -1 && (tempY - 1) >  - 1 && board[tempX-1][tempY-1] < 1) {
         // select all the options
         leftUp.push([tempX - 1, tempY - 1]);
         tempX--;
-          tempY -= count;
-          count++
+        tempY--
       }
-        selectOptionsBishop(x,y, [leftUp]);
+
+      tempX = x
+      tempY = y
+      let rightUp = [];
+      while ((tempX - 1 > -1 && (tempY + 1) < 8) && board[tempX -1][tempY +1] < 1)
+      {
+        rightUp.push([tempX - 1, tempY + 1])
+        tempX--
+        tempY ++
+    
+        if (board[tempX - 1][tempY + 1] < 0)
+        {
+          rightUp.push([tempX - 1, tempY + 1]);
+          break;
+        } 
+      }
+      selectOptionsBishop(x, y, [leftUp, rightUp]);
     }
 
-    function selectOptionsBishop(x, y, [leftUp]) {
+  function selectOptionsBishop(x, y, [leftUp, rightUp])
+  {
+      console.log('he',rightUp)
       const optionsBoard = [...board];
         optionsBoard[x][y] = 0;
         leftUp.forEach(([px, py]) => {
             optionsBoard[px][py] = "?"
         });
+    
+    rightUp.forEach(([px, py]) =>
+    {
+          optionsBoard[px][py] = "?";
+        })
         setBoard({ type: "setOptions", payload: optionsBoard });
     }
     
