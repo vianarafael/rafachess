@@ -54,22 +54,58 @@ function Bishop({ color })
           break;
         } 
       }
-      selectOptionsBishop(x, y, [leftUp, rightUp]);
+
+      tempX = x;
+      tempY = y;
+      let leftDown = [];
+      while (tempX + 1 < 8 && tempY - 1 > -1 && board[tempX + 1][tempY - 1] < 1)
+      {
+        leftDown.push([tempX + 1, tempY - 1]);
+        tempX++
+        tempY--
+      }
+
+      tempX = x;
+      tempY = y;
+      let rightDown = [];
+      while (tempX + 1 < 8 && tempY + 1 < 8 && board[tempX + 1][tempY + 1] < 1)
+      {
+
+        rightDown.push([tempX + 1, tempY + 1])
+        tempX++
+        tempY++
+      }
+
+
+        selectOptionsBishop(x, y, [leftUp, rightUp, leftDown, rightDown]);
     }
 
-  function selectOptionsBishop(x, y, [leftUp, rightUp])
+  function selectOptionsBishop(x, y, moveOptions)
   {
-      console.log('he',rightUp)
+      
       const optionsBoard = [...board];
-        optionsBoard[x][y] = 0;
-        leftUp.forEach(([px, py]) => {
-            optionsBoard[px][py] = "?"
-        });
+    optionsBoard[x][y] = 0;
     
-    rightUp.forEach(([px, py]) =>
-    {
-          optionsBoard[px][py] = "?";
-        })
+      moveOptions.forEach(option => option.forEach(([px, py]) => {
+          optionsBoard[px][py] = "?"
+      }))
+    
+    // rightUp.forEach(([px, py]) =>
+    // {
+    //       optionsBoard[px][py] = "?";
+    // })
+    
+
+    // leftDown.forEach(([px, py]) =>
+    // {
+    //   optionsBoard[px][py] = "?"
+    // })
+
+    // rightDown.forEach(([px, py]) =>
+    // {
+    //   optionsBoard[px][py] = "?";
+    // })
+
         setBoard({ type: "setOptions", payload: optionsBoard });
     }
     
