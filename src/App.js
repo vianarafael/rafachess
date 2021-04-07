@@ -41,7 +41,7 @@ function App()
   {
     const [board, dispatch] = useReducer(reducer, initialBoard)
     const [turn, setTurn] = useState("white");
-  
+  console.log(turn)
     const pieces = {
       1: <Pawn color="white" />,
       2: <Knight color="white" />,

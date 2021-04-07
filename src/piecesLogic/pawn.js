@@ -15,26 +15,67 @@ function Pawn({color})
   {
     if (color === "white")
     {
-      const optionsBoard = [...board];
-      optionsBoard[x][y] = 0;
-      if (walkOne) optionsBoard[x - 1][y] = "?";
-          if (walkTwo) optionsBoard[x - 2][y] = "?";
-          if (killLeft) optionsBoard[x - 1][y - 1] = "?";
-          if (killRight) optionsBoard[x - 1][Number(y) + 1] = "?";
-          
+
+      // make this a function
+      if (walkOne || walkTwo || killLeft || killRight)
+      {
+        const prevBoard = board.map(function (arr) {
+          return arr.slice();
+        });
+
         
-      setBoard({ type: "setOptions", payload: optionsBoard });
-  
-    } else {
+        prevBoard[x][y] = 0;
+        
+        setBoard({ type: "setPreviousBoard", payload: prevBoard });
+        setBoard({
+          type: "setSelectedPiece",
+          payload: { piece: "pawn", color },
+        });
+
+        //
+
+
+        console.log("gogogog");
         const optionsBoard = [...board];
         optionsBoard[x][y] = 0;
-        if (walkOne) optionsBoard[x + 1][y] = "!";
-        if (walkTwo) optionsBoard[x + 2][y] = "!";
-        if (killLeft) optionsBoard[x + 1][Number(y) + 1] = "!";
-        if (killRight) optionsBoard[x + 1][Number(y) - 1] = "!";
+        if (walkOne) optionsBoard[x - 1][y] = "?";
+        if (walkTwo) optionsBoard[x - 2][y] = "?";
+        if (killLeft) optionsBoard[x - 1][y - 1] = "?";
+        if (killRight) optionsBoard[x - 1][Number(y) + 1] = "?";
+
         setBoard({ type: "setOptions", payload: optionsBoard });
+        setTurn("transition");
+      } 
+    } else
+    {
+      ///
+
+      if (walkOne || walkTwo || killLeft || killRight)
+      {
+        const prevBoard = board.map(function (arr)
+        {
+          return arr.slice();
+        });
+
+        
+        prevBoard[x][y] = 0;
+        
+        setBoard({ type: "setPreviousBoard", payload: prevBoard });
+        setBoard({
+          type: "setSelectedPiece",
+          payload: { piece: "pawn", color },
+        });
+      }
+      ///
+      const optionsBoard = [...board];
+      optionsBoard[x][y] = 0;
+      if (walkOne) optionsBoard[x + 1][y] = "!";
+      if (walkTwo) optionsBoard[x + 2][y] = "!";
+      if (killLeft) optionsBoard[x + 1][Number(y) + 1] = "!";
+      if (killRight) optionsBoard[x + 1][Number(y) - 1] = "!";
+      setBoard({ type: "setOptions", payload: optionsBoard });
+      setTurn("transition")
     }
-    setTurn("transition")
   }
 
   function pawnOptions(x, y) {
@@ -100,6 +141,18 @@ function Pawn({color})
       }
     }
 
+      // const prevBoard = board.map(function (arr) {
+      //   return arr.slice();
+      // });
+    
+      //   setBoard({ type: "setPreviousBoard", payload: prevBoard });
+      //   setBoard({
+      //     type: "setSelectedPiece",
+      //     payload: { piece: "pawn", color },
+      //   });
+
+    // console.log(walkOne || walkTwo || killLeft || killRight);
+    // if (walkOne || walkTwo || killLeft || killRight) prevBoard[x][y] = 0;
     selectOptionsPawn(
       x,
       y,
@@ -110,14 +163,14 @@ function Pawn({color})
   function movePawn(e)
   {
     const [x, y] = e.target.parentNode.parentNode.id.split("-");
-    const prevBoard = board.map(function (arr)
-    {
-     return arr.slice();
-    });
-    prevBoard[x][y] = 0
-    setBoard({ type: "setPreviousBoard", payload: prevBoard });
-    setBoard({
-      type: "setSelectedPiece", payload: { piece: "pawn", color}})
+    // const prevBoard = board.map(function (arr)
+    // {
+    //  return arr.slice();
+    // });
+    // prevBoard[x][y] = 0
+    // setBoard({ type: "setPreviousBoard", payload: prevBoard });
+    // setBoard({
+    //   type: "setSelectedPiece", payload: { piece: "pawn", color}})
     pawnOptions(x, y);
   }
 
