@@ -33,9 +33,6 @@ function Pawn({color})
         });
 
         //
-
-
-        console.log("gogogog");
         const optionsBoard = [...board];
         optionsBoard[x][y] = 0;
         if (walkOne) optionsBoard[x - 1][y] = "?";
@@ -101,7 +98,7 @@ function Pawn({color})
       }
       // 1.2 If first move - can walk 2
 
-      if (x === 6) {
+      if (x === 6 && board[x - 2][y] === 0) {
         walkTwo = true;
       }
 
@@ -126,7 +123,7 @@ function Pawn({color})
       }
       // 1.2 If first move - can walk 2
 
-      if (x === 1) {
+      if (x === 1 && board[x+2][y] === 0) {
         walkTwo = true;
       }
 
