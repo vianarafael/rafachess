@@ -31,6 +31,9 @@ const selectMove = (e, prevBoard, selectedPiece, setBoard, setTurn) =>
         prevBoard[x][y] = -2;
         setBoard({ type: "setOptions", payload: prevBoard });
         break;
+      case "bishop":
+        prevBoard[x][y] = -3;
+        setBoard({ type: "setOptions", payload: prevBoard });
     }
     setTurn("white");
   }
