@@ -38,6 +38,11 @@ function Bishop({ color })
           leftUp.push([tempX - 1, tempY - 1]);
           tempX--;
           tempY--
+// ->
+                    if (board[tempX - 1][tempY - 1] < 0) {
+                      leftUp.push([tempX - 1, tempY - 1]);
+                      break;
+                    }
         }
 
         tempX = x
@@ -64,6 +69,11 @@ function Bishop({ color })
           leftDown.push([tempX + 1, tempY - 1]);
           tempX++
           tempY--
+          // ->
+                    if (board[tempX + 1][tempY - 1] < 0) {
+                      leftDown.push([tempX + 1, tempY - 1]);
+                      break;
+                    }
         }
 
         tempX = x;
@@ -75,31 +85,53 @@ function Bishop({ color })
           rightDown.push([tempX + 1, tempY + 1])
           tempX++
           tempY++
+          // console.log(tempX + 1, tempY +1, board[tempX +1][tempY+1])
+                    // if (
+                    //   board[tempX + 1][tempY + 1] &&
+                    //   board[tempX + 1][tempY + 1] < 0
+                    // ) {
+                    //   rightDown.push([tempX + 1, tempY + 1]);
+                    //   break;
+                    // }
         }
           selectOptionsBishop(x, y, [leftUp, rightUp, leftDown, rightDown]);
       } else
       {
         let leftUp = [];
-
+        let counter = 1
+        tempX = x
+        tempY = y
         while (
           tempX + 1 < 8 &&
           tempY - 1 > -1 &&
           board[tempX + 1][tempY - 1] > -1
-        ) {
-          // select all the options
+          && counter < 2
+        )
+        {
+          // console.log('boar', board[tempX+2][tempY-1])
+          if (board[tempX+1][tempY-1] >0 ) counter++
+          console.log('counter', counter)
+          
           leftUp.push([tempX + 1, tempY - 1]);
           tempX++;
           tempY--;
+          
+          //  if (board[tempX + 1][tempY - 1] > 0) {console.log('here')}
         }
 
           tempX = x;
           tempY = y;
-          let rightUp = [];
+        let rightUp = [];
+        counter = 1
+  
           while (
             tempX + 1 < 8 &&
             tempY + 1 < 8 &&
             board[tempX + 1][tempY + 1] > -1
-          ) {
+            &&  counter < 2
+          )
+          {
+            if (board[tempX + 1][tempY + 1] > 0) counter++;
             rightUp.push([tempX + 1, tempY + 1]);
             tempX++;
             tempY++;
@@ -107,28 +139,39 @@ function Bishop({ color })
         
                 tempX = x;
                 tempY = y;
-                let leftDown = [];
+        let leftDown = [];
+        counter = 1
+
                 while (
                   tempX - 1 > -1 &&
                   tempY + 1 < 8 &&
                   board[tempX - 1][tempY + 1] > -1
-                ) {
+                  && counter < 2
+                )
+                {
+                  if (board[tempX - 1][tempY + 1] > 0) counter++;
                   leftDown.push([tempX - 1, tempY + 1]);
                   tempX--;
                   tempY++;
+                  
                 }
         
                   tempX = x;
                   tempY = y;
-                  let rightDown = [];
+        let rightDown = [];
+        counter = 1
                   while (
                     tempX - 1 > -1 &&
                     tempY - 1 > -1 &&
-                    board[tempX - 1][tempY -1] > -1
-                  ) {
-                    leftDown.push([tempX - 1, tempY - 1]);
+                    board[tempX - 1][tempY - 1] > -1
+                    && counter < 2
+                  )
+                  {
+                    if (board[tempX - 1][tempY - 1] > 0) counter++;
+                    rightDown.push([tempX - 1, tempY - 1]);
                     tempX--;
                     tempY--;
+                   
                   }
 
         selectOptionsBishop(x, y, [leftUp, rightUp, leftDown, rightDown]);
