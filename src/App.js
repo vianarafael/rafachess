@@ -5,6 +5,7 @@ import selectMove from './piecesLogic/selectMove'
 import Pawn from './piecesLogic/pawn'
 import Knight from "./piecesLogic/knight"
 import Bishop from "./piecesLogic/bishop"
+import Rook from "./piecesLogic/rook"
 
 export const BoardContext = createContext()
 
@@ -31,7 +32,7 @@ const reducer = (state, action) =>
       prev = action.payload
     case "setSelectedPiece":
       selectedPiece = action.payload
-      console.log(selectedPiece)
+    
 
  
   }
@@ -45,15 +46,13 @@ function App()
       1: <Pawn color="white" />,
       2: <Knight color="white" />,
       3: <Bishop color="white" />,
-      4: <span>&#9814;</span>,
+      4: <Rook color="white" />,
       5: <span>&#9813;</span>,
       6: <span>&#9812;</span>,
-      "-1": (
-        <Pawn color="black" />
-      ),
+      "-1": <Pawn color="black" />,
       "-2": <Knight color="black" />,
       "-3": <Bishop color="black" />,
-      "-4": <span>&#9820;</span>,
+      "-4": <Rook color="black" />,
       "-5": <span>&#9819;</span>,
       "-6": <span>&#9818;</span>,
       "?": (
@@ -61,7 +60,9 @@ function App()
           className="selectable"
           // set selected piece - piece + color
           // get the board before options
-          onClick={(e) => selectMove(e, prev, selectedPiece, setBoard = dispatch, setTurn)}
+          onClick={(e) =>
+            selectMove(e, prev, selectedPiece, (setBoard = dispatch), setTurn)
+          }
         >
           &#8855;
         </span>
@@ -69,9 +70,8 @@ function App()
       "!": (
         <span
           className="selectable"
-          onClick={(e) =>
-          {
-            selectMove(e, prev, selectedPiece, setBoard = dispatch, setTurn)
+          onClick={(e) => {
+            selectMove(e, prev, selectedPiece, (setBoard = dispatch), setTurn);
           }}
         >
           &#8855;
