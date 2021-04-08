@@ -25,17 +25,16 @@ const King = ({ color }) =>
     {
         x = Number(x);
         y = Number(y);
+        let up = false;
+        let dur = false;
+        let right = false;
+        let ddr = false;
+        let down = false;
+        let ddl = false;
+        let left = false;
+        let dul = false;
         if (color === "white")
         {
-            let up = false;
-            let dur = false;
-            let right = false;
-            let ddr = false;
-            let down = false;
-            let ddl = false;
-            let left = false;
-            let dul = false;
-
             if (board[x - 1] && board[x - 1][y] < 1)
             {
                 up = true
@@ -63,13 +62,41 @@ const King = ({ color }) =>
 
             if (board[x + 1] && board[x + 1][y - 1] < 1) ddl = true;
 
-              selectOptionsKing(x, y, [up, down, right, left, dur, dul, ddr, ddl]);
+            selectOptionsKing(x, y, [up, down, right, left, dur, dul, ddr, ddl]);
+        } else
+        {
+            console.log("here", up,  board[x + 1][y]);
+            if (board[x + 1] && board[x + 1][y] > -1) {
+                up = true;
+                console.log('inside', up, board[x+1][y])
+            }
+
+            if (board[x - 1] && board[x - 1][y] > -1) {
+                down = true;
+            }
+
+            if (board[x][y - 1] > -1) {
+                right = true;
+            }
+
+            if (board[x][y + 1] > -1) {
+                left = true;
+            }
+
+            if (board[x + 1][y - 1] > -1) dur = true;
+
+            if (board[x + 1][y + 1] > -1) dul = true;
+
+            if (board[x -1 ] && board[x - 1][y -1 ] > -1) ddr = true;
+
+            if (board[x - 1] && board[x - 1][y + 1] > -1) ddl = true;
+            selectOptionsKing(x, y, [up, down, right, left, dur, dul, ddr, ddl]);
         }
     }
 
     function selectOptionsKing(x, y, [up, down, right, left, dur, dul, ddr, ddl])
     {
-        console.log("right", right)
+        console.log("right", up)
         const optionsBoard = [...board];
         optionsBoard[x][y] = 0;
         if (color === "white")
@@ -82,7 +109,17 @@ const King = ({ color }) =>
             if (dul) optionsBoard[x - 1][y - 1] = "?"
             if (ddr) optionsBoard[x + 1][y + 1] = "?"
             if (ddl) optionsBoard[x + 1][y - 1] = "?"
-        }    
+        } else
+        {
+            if (up) optionsBoard[x +1][y] = "!";
+            if (down) optionsBoard[x - 1][y] = "!";
+            if (right) optionsBoard[x][y - 1] = "!";
+            if (left) optionsBoard[x][y + 1] = "!";
+            if (dur) optionsBoard[x + 1][y - 1] = "!";
+            if (dul) optionsBoard[x + 1][y + 1] = "!";
+            if (ddr) optionsBoard[x - 1][y - 1] = "!";
+            if (ddl) optionsBoard[x - 1][y + 1] = "!";
+        }  
           setBoard({ type: "setOptions", payload: optionsBoard });
           setTurn("transition");
         }
