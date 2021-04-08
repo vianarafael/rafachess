@@ -21,7 +21,11 @@ const selectMove = (e, prevBoard, selectedPiece, setBoard, setTurn) =>
       case "rook":
         prevBoard[x][y] = 4;
         setBoard({ type: "setOptions", payload: prevBoard });
-        break
+        break;
+      case "king":
+        prevBoard[x][y] = 6;
+        setBoard({ type: "setOptions", payload: prevBoard });
+        break;
     }
     setTurn("black")
   } else
@@ -40,6 +44,10 @@ const selectMove = (e, prevBoard, selectedPiece, setBoard, setTurn) =>
         setBoard({ type: "setOptions", payload: prevBoard });
       case "rook":
         prevBoard[x][y] = -4;
+        setBoard({ type: "setOptions", payload: prevBoard });
+        break;
+      case "king":
+        prevBoard[x][y] = -6;
         setBoard({ type: "setOptions", payload: prevBoard });
         break;
     }

@@ -7,6 +7,8 @@ import Knight from "./piecesLogic/knight"
 import Bishop from "./piecesLogic/bishop"
 import Rook from "./piecesLogic/rook"
 
+import King from "./piecesLogic/king"
+
 export const BoardContext = createContext()
 
   const initialBoard = [
@@ -48,13 +50,13 @@ function App()
       3: <Bishop color="white" />,
       4: <Rook color="white" />,
       5: <span>&#9813;</span>,
-      6: <span>&#9812;</span>,
+      6: <King color="white" />,
       "-1": <Pawn color="black" />,
       "-2": <Knight color="black" />,
       "-3": <Bishop color="black" />,
       "-4": <Rook color="black" />,
       "-5": <span>&#9819;</span>,
-      "-6": <span>&#9818;</span>,
+      "-6": <King color="black" />,
       "?": (
         <span
           className="selectable"

@@ -5,14 +5,12 @@ import { BoardContext } from "../App";
 const Rook = ({ color }) =>
 {
     const { board, setBoard, turn, setTurn } = useContext(BoardContext);
+   
+        function moveRook(e) {
+          const [x, y] = e.target.parentNode.parentNode.id.split("-");
           const prevBoard = board.map(function (arr) {
             return arr.slice();
           });
-        function moveRook(e) {
-          const [x, y] = e.target.parentNode.parentNode.id.split("-");
-        //   const prevBoard = board.map(function (arr) {
-        //     return arr.slice();
-        //   });
           prevBoard[x][y] = 0;
           setBoard({ type: "setPreviousBoard", payload: prevBoard });
           setBoard({
