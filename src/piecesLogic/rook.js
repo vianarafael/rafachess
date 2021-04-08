@@ -44,7 +44,7 @@ const Rook = ({ color }) =>
           counter = 1;
           while (board[x][tempY + 1] < 1 && counter < 2) {
             right.push([x, tempY + 1]);
-            if (board[x][tempY + 1]) counter++;
+            if (board[x][tempY + 1] < 0) counter++;
             tempY++;
           }
             
@@ -54,7 +54,7 @@ const Rook = ({ color }) =>
             // same as above
             while (board[tempX +1] && board[tempX +1][y] < 1 && counter < 2) {
             down.push([tempX + 1, y]);
-            if (board[tempX + 1][y]) counter++;
+            if (board[tempX + 1][y] < 0) counter++;
             tempX++;
             }
             
@@ -64,11 +64,63 @@ const Rook = ({ color }) =>
 
             while (board[x][tempY - 1] < 1 && counter < 2) {
             left.push([x, tempY - 1]);
-            if (board[x][tempY - 1]) counter++;
+            if (board[x][tempY - 1] < 0) counter++;
             tempY--;
             }
 
           selectOptionsRook(x, y, [up, right, down, left]);
+        } else
+        {
+             let up = [];
+
+             let counter = 1;
+             let tempX = x;
+             // I don't know what was wrong, but while (board[tempX - 1] - fixed it
+             while (
+               board[tempX + 1] &&
+               board[tempX + 1][y] > -1 &&
+               counter < 2
+             ) {
+               up.push([tempX + 1, y]);
+               if (board[tempX + 1][y] > 0) counter++;
+               tempX++;
+            }
+            
+            let right = [];
+            let tempY = y;
+            counter = 1;
+            while (board[x][tempY - 1] > -1 && counter < 2) {
+                right.push([x, tempY - 1]);
+                if (board[x][tempY - 1] > 0) counter++;
+                tempY--;
+            }
+
+            let down = [];
+            tempX = x;
+            counter = 1;
+            // same as above
+            while (
+            board[tempX - 1] &&
+            board[tempX - 1][y] > -1 &&
+            counter < 2
+            ) {
+            down.push([tempX - 1, y]);
+            if (board[tempX - 1][y] > 0) counter++;
+            tempX++;
+            }
+
+            let left = [];
+            tempY = y;
+            counter = 1;
+
+            while (board[x][tempY + 1] > -1 && counter < 2) {
+                left.push([x, tempY + 1]);
+                if (board[x][tempY + 1] > 0) counter++;
+                tempY++;
+            }
+
+
+             selectOptionsRook(x, y, [up, right, down, left]);
         }
     }
 
