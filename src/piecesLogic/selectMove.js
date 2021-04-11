@@ -1,8 +1,8 @@
 
 
-const selectMove = (e, prevBoard, selectedPiece, setBoard, setTurn) =>
+const selectMove = (e, prevBoard, selectedPiece, setBoard, setTurn, finishedMove, setFinishedMove) =>
 {
-    const [x, y] = e.target.parentNode.id.split("-");
+  const [x, y] = e.target.parentNode.id.split("-");
   if (selectedPiece.color === "white")
   {         
     switch (selectedPiece.piece) {
@@ -20,6 +20,10 @@ const selectMove = (e, prevBoard, selectedPiece, setBoard, setTurn) =>
         break;
       case "rook":
         prevBoard[x][y] = 4;
+        setBoard({ type: "setOptions", payload: prevBoard });
+        break;
+      case "queen":
+        prevBoard[x][y] = 5;
         setBoard({ type: "setOptions", payload: prevBoard });
         break;
       case "king":
@@ -42,8 +46,13 @@ const selectMove = (e, prevBoard, selectedPiece, setBoard, setTurn) =>
       case "bishop":
         prevBoard[x][y] = -3;
         setBoard({ type: "setOptions", payload: prevBoard });
+        break
       case "rook":
         prevBoard[x][y] = -4;
+        setBoard({ type: "setOptions", payload: prevBoard });
+        break;
+      case "queen":
+        prevBoard[x][y] = -5;
         setBoard({ type: "setOptions", payload: prevBoard });
         break;
       case "king":
@@ -53,6 +62,7 @@ const selectMove = (e, prevBoard, selectedPiece, setBoard, setTurn) =>
     }
     setTurn("white");
   }
+  setFinishedMove(!finishedMove)
 }
 
 

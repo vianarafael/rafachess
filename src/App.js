@@ -1,16 +1,28 @@
 import "./App.css";
-import { useState, createContext, useReducer } from "react";
+import { useState, createContext, useReducer, useEffect } from "react";
 
 import selectMove from './piecesLogic/selectMove'
 import Pawn from './piecesLogic/pawn'
 import Knight from "./piecesLogic/knight"
 import Bishop from "./piecesLogic/bishop"
 import Rook from "./piecesLogic/rook"
-
+import Queen from "./piecesLogic/queen"
 import King from "./piecesLogic/king"
 
-export const BoardContext = createContext()
+import socketIOClient from "socket.io-client"
+const endpoint = "http://localhost:1234/";
 
+export const BoardContext = createContext()
+  const resetBoard = [
+    [-4, -2, -3, -5, -6, -3, -2, -4],
+    [-1, -1, -1, -1, -1, -1, -1, -1],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [4, 2, 3, 5, 6, 3, 2, 4],
+  ];
   const initialBoard = [
     [-4, -2, -3, -5, -6, -3, -2, -4],
     [-1, -1, -1, -1, -1, -1, -1, -1],
@@ -27,35 +39,60 @@ let selectedPiece
   let setBoard = () => console.log('set board')
 const reducer = (state, action) =>
 {
-  switch (action.type) {
-    case "setOptions":
-      return action.payload;
-    case "setPreviousBoard":
-      prev = action.payload
-    case "setSelectedPiece":
-      selectedPiece = action.payload
-    
-
- 
+  if (action)
+  {
+    switch (action.type)
+    {
+      case "setOptions":
+        return action.payload;
+      case "setPreviousBoard":
+        prev = action.payload
+      case "setSelectedPiece":
+        selectedPiece = action.payload
+    }
   }
 }
 
 function App()
   {
-    const [board, dispatch] = useReducer(reducer, initialBoard)
-    const [turn, setTurn] = useState("white");
+  const [board, dispatch] = useReducer(reducer, initialBoard)
+  const [turn, setTurn] = useState("white");
+  const [finishedMove, setFinishedMove] = useState(false);
+      const socket = socketIOClient(endpoint, {
+        withCredentials: true,
+        extraHeaders: {
+          "my-custom-header": "abcd",
+        },
+      });
+  
+  useEffect(() =>
+  {
+        socket.on("move", (data) => {
+          console.log(data);
+          setTurn(data.turn);
+          dispatch({ type: "setOptions", payload: data.board });
+        });
+        socket.emit("move", {
+          board,
+          turn,
+        });
+
+  }, [finishedMove])
+  
+
+
     const pieces = {
       1: <Pawn color="white" />,
       2: <Knight color="white" />,
       3: <Bishop color="white" />,
       4: <Rook color="white" />,
-      5: <span>&#9813;</span>,
+      5: <Queen color="white" />,
       6: <King color="white" />,
       "-1": <Pawn color="black" />,
       "-2": <Knight color="black" />,
       "-3": <Bishop color="black" />,
       "-4": <Rook color="black" />,
-      "-5": <span>&#9819;</span>,
+      "-5": <Queen color="black" />,
       "-6": <King color="black" />,
       "?": (
         <span
@@ -63,7 +100,15 @@ function App()
           // set selected piece - piece + color
           // get the board before options
           onClick={(e) =>
-            selectMove(e, prev, selectedPiece, (setBoard = dispatch), setTurn)
+            selectMove(
+              e,
+              prev,
+              selectedPiece,
+              (setBoard = dispatch),
+              setTurn,
+              finishedMove,
+              setFinishedMove
+            )
           }
         >
           &#8855;
@@ -73,7 +118,15 @@ function App()
         <span
           className="selectable"
           onClick={(e) => {
-            selectMove(e, prev, selectedPiece, (setBoard = dispatch), setTurn);
+            selectMove(
+              e,
+              prev,
+              selectedPiece,
+              (setBoard = dispatch),
+              setTurn,
+              finishedMove,
+              setFinishedMove
+            );
           }}
         >
           &#8855;
@@ -84,29 +137,61 @@ function App()
 
     function displayBoard()
     {
-      if (Array.isArray(board))
-      {
-        return board.map((row, indexRow) =>
-        {
+      const check = {};
+
+      if (Array.isArray(board)) {
+        const result = board.map((row, indexRow) => {
           let firstColor, secondColor;
-          if (indexRow % 2 === 0)
-          {
+          if (indexRow % 2 === 0) {
             firstColor = "white";
             secondColor = "black";
-          } else
-          {
+          } else {
             firstColor = "black";
             secondColor = "white";
           }
-          return row.map((square, indexSquare) => (
-            <div
-              id={`${indexRow}-${indexSquare}`}
-              className={indexSquare % 2 === 0 ? firstColor : secondColor}
-            >
-              {pieces[square]}
-            </div>
-          ));
+          return row.map((square, indexSquare) => {
+            check[square] = square;
+            return (
+              <div
+                id={`${indexRow}-${indexSquare}`}
+                className={indexSquare % 2 === 0 ? firstColor : secondColor}
+              >
+                {pieces[square]}
+              </div>
+            );
+          });
         });
+        // if there are no ? && !
+        // && if there are no kings 6 && -6 -> end game
+        if (!check["?"] && !check["!"])
+        {
+          if (!check[6] || !check["-6"])
+          {
+            //dry - change this
+            return resetBoard.map((row, indexRow) => {
+              let firstColor, secondColor;
+              if (indexRow % 2 === 0) {
+                firstColor = "white";
+                secondColor = "black";
+              } else {
+                firstColor = "black";
+                secondColor = "white";
+              }
+              return row.map((square, indexSquare) => {
+                check[square] = square;
+                return (
+                  <div
+                    id={`${indexRow}-${indexSquare}`}
+                    className={indexSquare % 2 === 0 ? firstColor : secondColor}
+                  >
+                    {pieces[square]}
+                  </div>
+                );
+              });
+            });
+          }
+        }
+        return result;
       }
     }
  
