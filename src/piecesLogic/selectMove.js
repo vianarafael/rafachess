@@ -7,7 +7,9 @@ const selectMove = (e, prevBoard, selectedPiece, setBoard, setTurn, finishedMove
   {         
     switch (selectedPiece.piece) {
       case "pawn":
-        prevBoard[x][y] = 1;
+        // queening
+        if (x === "0") prevBoard [x][y] = 5
+        else prevBoard[x][y] = 1;
         setBoard({ type: "setOptions", payload: prevBoard });
         break;
       case "knight":
@@ -36,7 +38,9 @@ const selectMove = (e, prevBoard, selectedPiece, setBoard, setTurn, finishedMove
   {
     switch (selectedPiece.piece) {
       case "pawn":
-        prevBoard[x][y] = -1;
+        // queening
+        if (x === "7") prevBoard[x][y] = -5;
+        else prevBoard[x][y] = -1;
         setBoard({ type: "setOptions", payload: prevBoard });
         break;
       case "knight":
@@ -46,7 +50,7 @@ const selectMove = (e, prevBoard, selectedPiece, setBoard, setTurn, finishedMove
       case "bishop":
         prevBoard[x][y] = -3;
         setBoard({ type: "setOptions", payload: prevBoard });
-        break
+        break;
       case "rook":
         prevBoard[x][y] = -4;
         setBoard({ type: "setOptions", payload: prevBoard });
