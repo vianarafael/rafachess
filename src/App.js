@@ -12,11 +12,11 @@ import King from "./piecesLogic/king"
 import socketIOClient from "socket.io-client"
 
 let socket;
-if(process.env.NODE_ENV === "development"){
-    socket = socketIOClient("http://127.0.0.1:8080");
-}else{
-    socket = socketIOClient("http://111.11.111.111/");
-}
+//if(process.env.NODE_ENV === "development"){
+    socket = socketIOClient("http://3.141.23.100");
+//}else{
+//    socket = socketIOClient("http://111.11.111.111/");
+//}
 // const endpoint = "http://localhost:8080";
 export const BoardContext = createContext()
   const resetBoard = [
