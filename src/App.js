@@ -10,8 +10,7 @@ import Queen from "./piecesLogic/queen"
 import King from "./piecesLogic/king"
 
 import socketIOClient from "socket.io-client"
-const endpoint = "http://localhost:1234/";
-
+const endpoint = "http://localhost:1234";
 export const BoardContext = createContext()
   const resetBoard = [
     [-4, -2, -3, -5, -6, -3, -2, -4],
@@ -67,7 +66,7 @@ function App()
   
   useEffect(() =>
   {
-        socket.on("move", (data) => {
+	  socket.on("move", (data) => {
           console.log(data);
           setTurn(data.turn);
           dispatch({ type: "setOptions", payload: data.board });
