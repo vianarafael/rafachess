@@ -10,7 +10,7 @@ import Queen from "./piecesLogic/queen"
 import King from "./piecesLogic/king"
 
 import socketIOClient from "socket.io-client"
-const endpoint = "http://localhost:1234";
+const endpoint = "http://localhost:8080";
 export const BoardContext = createContext()
   const resetBoard = [
     [-4, -2, -3, -5, -6, -3, -2, -4],
