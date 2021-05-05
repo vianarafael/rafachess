@@ -211,7 +211,7 @@ function App()
       <BoardContext.Provider value={{ board, setBoard: dispatch, turn, setTurn }}>
         <div className="chessboard">{displayBoard()}</div>
       </BoardContext.Provider>
-      <Clock />
+      <Clock turn={turn} />
       </>
     );
   }

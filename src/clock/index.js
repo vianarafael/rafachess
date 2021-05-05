@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
 import './clock.css'
 
-const Clock = () => {
-  let color = "white"
+import BaseTimer from './baseTimer'
+
+const Clock = ({turn}) =>
+{
+
   const [secondsW, setSecondsW] = useState(1800);
   const [isRunningW, setIsRunningW] = useState(true)
   const [intervalIDW, setIntervalIDW] = useState(null);
@@ -11,6 +14,20 @@ const Clock = () => {
   const [isRunningB, setIsRunningB] = useState(false);
   const [intervalIDB, setIntervalIDB] = useState(null);
 
+  
+
+  useEffect(() =>
+  {
+    console.log(turn)
+    if (turn === "white") {
+      setIsRunningW(true);
+      setIsRunningB(false);
+    } 
+    if (turn === "black") {
+      setIsRunningW(false);
+      setIsRunningB(true);
+    }
+  })
 
     useEffect(() => {
       if (isRunningW)
@@ -39,33 +56,15 @@ const Clock = () => {
 
         return (
           <div id="clock">
-            {/* <div>{`${Math.floor(secondsW / 60)} : ${secondsW % 60}`}</div> */}
 
-            <div>{`${Math.floor(secondsB / 60)}:${Math.floor(
+            <BaseTimer>{`${Math.floor(secondsB / 60)}:${Math.floor(
               secondsB % 60
-            )}`}</div>
-            <button
-              onClick={() => {
-                setIsRunningW(true);
-                setIsRunningB(false);
-              }}
-            >
-              Black
-            </button>
+            )}`}</BaseTimer>
+  
 
-            {/* white one */}
-
-            <div>{`${Math.floor(secondsW / 60)}:${Math.floor(
+            <BaseTimer>{`${Math.floor(secondsW / 60)}:${Math.floor(
               secondsW % 60
-            )}`}</div>
-            <button
-              onClick={() => {
-                setIsRunningW(false);
-                setIsRunningB(true);
-              }}
-            >
-              White
-            </button>
+            )}`}</BaseTimer>
           </div>
         );
 }
