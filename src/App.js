@@ -12,9 +12,14 @@ import Queen from "./piecesLogic/queen"
 import King from "./piecesLogic/king"
 
 import socketIOClient from "socket.io-client"
-const endpoint = "http://localhost:1234/";
 
-
+let socket;
+//if(process.env.NODE_ENV === "development"){
+    socket = socketIOClient("http://3.141.23.100");
+//}else{
+//    socket = socketIOClient("http://111.11.111.111/");
+//}
+// const endpoint = "http://localhost:8080";
 export const BoardContext = createContext()
   const resetBoard = [
     [-4, -2, -3, -5, -6, -3, -2, -4],
@@ -61,16 +66,16 @@ function App()
   const [board, dispatch] = useReducer(reducer, initialBoard)
   const [turn, setTurn] = useState("white");
   const [finishedMove, setFinishedMove] = useState(false);
-      const socket = socketIOClient(endpoint, {
-        withCredentials: true,
-        extraHeaders: {
-          "my-custom-header": "abcd",
-        },
-      });
+      // const socket = socketIOClient(endpoint, {
+      //   withCredentials: true,
+      //   extraHeaders: {
+      //     "my-custom-header": "abcd",
+      //   },
+      // });
   
   useEffect(() =>
   {
-        socket.on("move", (data) => {
+	  socket.on("move", (data) => {
           console.log(data);
           setTurn(data.turn);
           dispatch({ type: "setOptions", payload: data.board });
