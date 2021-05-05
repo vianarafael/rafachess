@@ -1,6 +1,8 @@
 import "./App.css";
 import { useState, createContext, useReducer, useEffect } from "react";
 
+import Clock from './clock'
+
 import selectMove from './piecesLogic/selectMove'
 import Pawn from './piecesLogic/pawn'
 import Knight from "./piecesLogic/knight"
@@ -11,6 +13,7 @@ import King from "./piecesLogic/king"
 
 import socketIOClient from "socket.io-client"
 const endpoint = "http://localhost:1234/";
+
 
 export const BoardContext = createContext()
   const resetBoard = [
@@ -194,11 +197,17 @@ function App()
         return result;
       }
     }
- 
-    return (
+  
+  
+
+    
+  return (
+      <>
       <BoardContext.Provider value={{ board, setBoard: dispatch, turn, setTurn }}>
         <div className="chessboard">{displayBoard()}</div>
       </BoardContext.Provider>
+      <Clock />
+      </>
     );
   }
 

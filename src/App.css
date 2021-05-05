@@ -1,4 +1,5 @@
 .chessboard {
+  display: inline-block;
   width: 640px;
   height: 640px;
   margin: 20px;

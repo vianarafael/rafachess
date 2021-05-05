@@ -5,12 +5,13 @@ import { BoardContext } from "../App";
 const Rook = ({ color }) =>
 {
     const { board, setBoard, turn, setTurn } = useContext(BoardContext);
-   
+  
         function moveRook(e) {
           const [x, y] = e.target.parentNode.parentNode.id.split("-");
           const prevBoard = board.map(function (arr) {
             return arr.slice();
           });
+
           prevBoard[x][y] = 0;
           setBoard({ type: "setPreviousBoard", payload: prevBoard });
           setBoard({
@@ -65,8 +66,12 @@ const Rook = ({ color }) =>
             if (board[x][tempY - 1] < 0) counter++;
             tempY--;
             }
-
-          selectOptionsRook(x, y, [up, right, down, left]);
+          console.log(up.length, right.length, down.length, left.length)
+          if ((up.length || right.length || down.length || left.length))
+          {
+            
+            selectOptionsRook(x, y, [up, right, down, left]);
+          }
         } else
         {
              let up = [];
