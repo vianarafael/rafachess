@@ -4,6 +4,10 @@
     
 }
 
+#clock-black {
+    margin-bottom: 5rem;
+}
+
 /* Sets the containers height and width */
 .base-timer {
   position: relative;

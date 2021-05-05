@@ -54,16 +54,19 @@ const Clock = ({turn}) =>
       }, [isRunningB]);
 
 
-        return (
+  return (
           <div id="clock">
+          <div id="clock-black">
             <BaseTimer>{`${Math.floor(secondsB / 60)}:
             ${Math.floor(secondsB % 60) < 10 ? 0 : ""}
             ${Math.floor(secondsB % 60)}`}</BaseTimer>
-
+          </div>
+          <div id="clock-white">
             <BaseTimer>{`${Math.floor(secondsW / 60)}:
             ${Math.floor(secondsW % 60) < 10 ? 0 : ""}
             ${Math.floor(secondsW % 60)}`}</BaseTimer>
-          </div>
+      </div>
+      </div>
         );
 }
 
