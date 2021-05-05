@@ -15,7 +15,7 @@ import socketIOClient from "socket.io-client"
 
 let socket;
 //if(process.env.NODE_ENV === "development"){
-    socket = socketIOClient("http://3.141.23.100");
+    socket = socketIOClient("https://rafachess.xyz");
 //}else{
 //    socket = socketIOClient("http://111.11.111.111/");
 //}
