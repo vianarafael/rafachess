@@ -65,7 +65,7 @@ const Clock = ({turn}) =>
             <BaseTimer>{`${Math.floor(secondsW / 60)}:
             ${Math.floor(secondsW % 60) < 10 ? 0 : ""}
             ${Math.floor(secondsW % 60)}`}</BaseTimer>
-      </div>
+          </div>
       </div>
         );
 }
