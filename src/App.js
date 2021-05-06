@@ -14,12 +14,11 @@ import King from "./piecesLogic/king"
 import socketIOClient from "socket.io-client"
 
 let socket;
-//if(process.env.NODE_ENV === "development"){
-    // socket = socketIOClient("https://rafachess.xyz");
-//}else{
-   socket = socketIOClient("http://localhost:1234/");
-//}
-// const endpoint = "http://localhost:8080";
+
+    socket = socketIOClient("https://rafachess.xyz");
+
+  //  socket = socketIOClient("http://localhost:1234/");
+
 export const BoardContext = createContext()
   const resetBoard = [
     [-4, -2, -3, -5, -6, -3, -2, -4],
@@ -69,6 +68,7 @@ function App()
 
   const [gameStarted, setGameStart] = useState(false)
   const [playerColor, setPlayerColor] = useState("black")
+  const [gameRoom, setGameRoom] = useState();
   
   useEffect(() =>
   {
@@ -80,14 +80,15 @@ function App()
         socket.emit("move", {
           board,
           turn,
+          gameRoom
         });
     
-    socket.on("stats", numClients =>
+    socket.on("stats", ({ numClients, gameRoom }) =>
     {
-      console.log('here', numClients)
-      if (numClients === 1) setPlayerColor("white")
-      else
-      {
+      setGameRoom(gameRoom)
+      console.log("here", numClients);
+      if (numClients === 1) setPlayerColor("white");
+      else {
         setGameStart(true);
       }
     });
