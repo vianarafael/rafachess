@@ -6,7 +6,7 @@ import { BoardContext } from '../App'
 function Pawn({color})
 {
   
-  const { board, setBoard, turn, setTurn } = useContext(BoardContext)
+  const { board, setBoard, turn, setTurn, playerColor } = useContext(BoardContext)
   function selectOptionsPawn(
     x,
     y,
@@ -138,18 +138,6 @@ function Pawn({color})
       }
     }
 
-      // const prevBoard = board.map(function (arr) {
-      //   return arr.slice();
-      // });
-    
-      //   setBoard({ type: "setPreviousBoard", payload: prevBoard });
-      //   setBoard({
-      //     type: "setSelectedPiece",
-      //     payload: { piece: "pawn", color },
-      //   });
-
-    // console.log(walkOne || walkTwo || killLeft || killRight);
-    // if (walkOne || walkTwo || killLeft || killRight) prevBoard[x][y] = 0;
     selectOptionsPawn(
       x,
       y,
@@ -160,20 +148,12 @@ function Pawn({color})
   function movePawn(e)
   {
     const [x, y] = e.target.parentNode.parentNode.id.split("-");
-    // const prevBoard = board.map(function (arr)
-    // {
-    //  return arr.slice();
-    // });
-    // prevBoard[x][y] = 0
-    // setBoard({ type: "setPreviousBoard", payload: prevBoard });
-    // setBoard({
-    //   type: "setSelectedPiece", payload: { piece: "pawn", color}})
     pawnOptions(x, y);
   }
 
   
   return (
-    <Piece className="pawn" onClick={(e) => {if (color === turn) movePawn(e)}}>
+    <Piece className="pawn" onClick={(e) => {if (color === turn && turn === playerColor) movePawn(e)}}>
       {color === "white" ? <span>&#9817;</span> : <span>&#9823;</span>}
     </Piece>
   );

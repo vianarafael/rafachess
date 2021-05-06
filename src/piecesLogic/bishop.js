@@ -4,7 +4,9 @@ import { BoardContext } from "../App";
 
 function Bishop({ color })
 {
-    const { board, setBoard, turn, setTurn } = useContext(BoardContext);
+    const { board, setBoard, turn, setTurn, playerColor } = useContext(
+      BoardContext
+    );
     
     function moveBishop(e)
     {
@@ -178,7 +180,7 @@ function Bishop({ color })
           className="bishop"
               onClick={(e) =>
               {
-            if (color === turn) moveBishop(e);
+            if (color === turn && playerColor === turn) moveBishop(e);
           }}
         >
           {color === "white" ? <span>&#9815;</span> : <span>&#9821;</span>}

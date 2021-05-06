@@ -4,7 +4,9 @@ import { BoardContext } from "../App";
 
 const Rook = ({ color }) =>
 {
-    const { board, setBoard, turn, setTurn } = useContext(BoardContext);
+    const { board, setBoard, turn, setTurn, playerColor } = useContext(
+      BoardContext
+    );
   
         function moveRook(e) {
           const [x, y] = e.target.parentNode.parentNode.id.split("-");
@@ -145,7 +147,7 @@ const Rook = ({ color }) =>
        <Piece
          className="rook"
          onClick={(e) => {
-              if (color === turn) moveRook(e);
+              if (color === turn && turn === playerColor) moveRook(e);
          }}
        >
          {color === "white" ? (

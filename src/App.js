@@ -15,9 +15,9 @@ import socketIOClient from "socket.io-client"
 
 let socket;
 //if(process.env.NODE_ENV === "development"){
-    socket = socketIOClient("https://rafachess.xyz");
+    // socket = socketIOClient("https://rafachess.xyz");
 //}else{
-//    socket = socketIOClient("http://111.11.111.111/");
+   socket = socketIOClient("http://localhost:1234/");
 //}
 // const endpoint = "http://localhost:8080";
 export const BoardContext = createContext()
@@ -66,12 +66,9 @@ function App()
   const [board, dispatch] = useReducer(reducer, initialBoard)
   const [turn, setTurn] = useState("white");
   const [finishedMove, setFinishedMove] = useState(false);
-      // const socket = socketIOClient(endpoint, {
-      //   withCredentials: true,
-      //   extraHeaders: {
-      //     "my-custom-header": "abcd",
-      //   },
-      // });
+
+  const [gameStarted, setGameStart] = useState(false)
+  const [playerColor, setPlayerColor] = useState("black")
   
   useEffect(() =>
   {
@@ -84,6 +81,16 @@ function App()
           board,
           turn,
         });
+    
+    socket.on("stats", numClients =>
+    {
+      console.log('here', numClients)
+      if (numClients === 1) setPlayerColor("white")
+      else
+      {
+        setGameStart(true);
+      }
+    });
 
   }, [finishedMove])
   
@@ -105,8 +112,6 @@ function App()
       "?": (
         <span
           className="selectable"
-          // set selected piece - piece + color
-          // get the board before options
           onClick={(e) =>
             selectMove(
               e,
@@ -205,15 +210,27 @@ function App()
   
   
 
-    
+  
+
+  
   return (
-      <>
-      <BoardContext.Provider value={{ board, setBoard: dispatch, turn, setTurn }}>
-        <div className="chessboard">{displayBoard()}</div>
-      </BoardContext.Provider>
-      <Clock turn={turn} />
-      </>
-    );
+    <>
+      {gameStarted ? (
+        <>
+          <BoardContext.Provider
+            value={{ board, setBoard: dispatch, turn, setTurn, playerColor }}
+          >
+            <div className="chessboard">{displayBoard()}</div>
+          </BoardContext.Provider>
+          <Clock turn={turn} />
+        </>
+      ) : (
+        <>
+          <p>Wait for your adversary</p>
+        </>
+      )}
+    </>
+  );
   }
 
 export default App;

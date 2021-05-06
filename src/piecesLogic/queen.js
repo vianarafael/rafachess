@@ -6,7 +6,9 @@ const Queen = ({ color }) =>
 {
     
 
-      const { board, setBoard, turn, setTurn } = useContext(BoardContext);
+      const { board, setBoard, turn, setTurn, playerColor } = useContext(
+        BoardContext
+      );
 
       function moveQueen(e) {
         const [x, y] = e.target.parentNode.parentNode.id.split("-");
@@ -271,7 +273,7 @@ const Queen = ({ color }) =>
       <Piece
         className="queen"
         onClick={(e) => {
-          if (color === turn) moveQueen(e);
+          if (color === turn && playerColor === turn) moveQueen(e);
         }}
       >
         {color === "white" ? <span>&#9813;</span> : <span>&#9819;</span>}

@@ -4,7 +4,9 @@ import { BoardContext } from "../App";
 
 const King = ({ color }) =>
 {
-    const { board, setBoard, turn, setTurn } = useContext(BoardContext);
+    const { board, setBoard, turn, setTurn, playerColor } = useContext(
+      BoardContext
+    );
 
     function moveKing(e)
     {
@@ -128,7 +130,7 @@ const King = ({ color }) =>
        <Piece
          className="king"
          onClick={(e) => {
-           if (color === turn) moveKing(e);
+           if (color === turn && turn === playerColor) moveKing(e);
          }}
        >
          {color === "white" ? <span>&#9812;</span> : <span>&#9818;</span>}

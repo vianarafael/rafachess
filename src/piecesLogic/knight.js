@@ -5,7 +5,9 @@ import { BoardContext } from "../App";
 const Knight =  ({ color }) =>
 {
 
-    const { board, setBoard, turn, setTurn } = useContext(BoardContext);
+    const { board, setBoard, turn, setTurn, playerColor } = useContext(
+      BoardContext
+    );
 
         function selectOptionsKnight(
       x,
@@ -185,7 +187,7 @@ const Knight =  ({ color }) =>
     }
 
       return (
-    <Piece className="knight" onClick={(e) => {if (turn === color) moveKnight(e)}}>
+    <Piece className="knight" onClick={(e) => {if (turn === color && playerColor === turn) moveKnight(e);}}>
       {color === "white" ? <span>&#9816;</span> : <span>&#9822;</span> }
     </Piece>
   );

@@ -18,7 +18,6 @@ const Clock = ({turn}) =>
 
   useEffect(() =>
   {
-    console.log(turn)
     if (turn === "white") {
       setIsRunningW(true);
       setIsRunningB(false);
