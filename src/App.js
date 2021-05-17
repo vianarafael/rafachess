@@ -15,9 +15,9 @@ import socketIOClient from "socket.io-client"
 
 let socket;
 
-    socket = socketIOClient("https://rafachess.xyz");
+    // socket = socketIOClient("https://rafachess.xyz");
 
-  //  socket = socketIOClient("http://localhost:1234/");
+   socket = socketIOClient("http://localhost:1234/");
 
 export const BoardContext = createContext()
   const resetBoard = [
