@@ -2,7 +2,7 @@ import "./App.css";
 import { useState, createContext, useReducer, useEffect } from "react";
 
 import Clock from "./clock";
-// something else
+
 import selectMove from "./piecesLogic/selectMove";
 import Pawn from "./piecesLogic/pawn";
 import Knight from "./piecesLogic/knight";
@@ -64,7 +64,7 @@ function App() {
 
   const [gameStarted, setGameStart] = useState(false);
   const [playerColor, setPlayerColor] = useState("black");
-  const [gameRoom, setGameRoom] = useState();
+  const [gameRoom, setGameRoom] = useState(0);
 
   useEffect(() => {
     socket.on("move", (data) => {
