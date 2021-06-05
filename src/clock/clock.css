@@ -1,14 +1,7 @@
 #clock {
-    display: inline-block;
-    text-align: center;
-    
+  display: inline-block;
+  text-align: center;
 }
-
-#clock-black {
-    margin-bottom: 8rem;
-}
-
-
 
 /* Sets the containers height and width */
 .base-timer {
@@ -31,14 +24,14 @@
 
 .base-timer__label {
   position: absolute;
-  
+
   /* Size should match the parent container */
   width: 300px;
   height: 300px;
-  
+
   /* Keep the label aligned to the top */
   top: 0;
-  
+
   /* Create a flexible box that centers content vertically and horizontally */
   display: flex;
   align-items: center;

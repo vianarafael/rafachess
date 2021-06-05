@@ -209,7 +209,7 @@ function App() {
                 : displayBoard().reverse()}
             </div>
           </BoardContext.Provider>
-          <Clock turn={turn} />
+          <Clock playerColor={playerColor} turn={turn} />
         </>
       ) : (
         <>
