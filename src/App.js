@@ -203,7 +203,11 @@ function App() {
           <BoardContext.Provider
             value={{ board, setBoard: dispatch, turn, setTurn, playerColor }}
           >
-            <div className="chessboard">{displayBoard()}</div>
+            <div className="chessboard">
+              {playerColor === "white"
+                ? displayBoard()
+                : displayBoard().reverse()}
+            </div>
           </BoardContext.Provider>
           <Clock turn={turn} />
         </>
