@@ -67,6 +67,7 @@ function App() {
   const [gameRoom, setGameRoom] = useState(0);
 
   useEffect(() => {
+    console.log("pc", playerColor);
     socket.on("move", (data) => {
       console.log(data);
       setTurn(data.turn);
@@ -165,7 +166,7 @@ function App() {
         });
       });
       // if there are no ? && !
-      // && if there are no kings 6 && -6 -> end game
+      // && if there are no kings 6 || -6 -> end game
       if (!check["?"] && !check["!"]) {
         if (!check[6] || !check["-6"]) {
           //dry - change this
@@ -203,10 +204,14 @@ function App() {
           <BoardContext.Provider
             value={{ board, setBoard: dispatch, turn, setTurn, playerColor }}
           >
-            <div className="chessboard">
-              {playerColor === "white"
-                ? displayBoard()
-                : displayBoard().reverse()}
+            <div
+              className="chessboard"
+              style={{
+                transform: (() =>
+                  playerColor === "black" ? "rotate(180deg)" : "")(),
+              }}
+            >
+              {displayBoard()}
             </div>
           </BoardContext.Provider>
           <Clock playerColor={playerColor} turn={turn} />
