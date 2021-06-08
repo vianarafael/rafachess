@@ -13,6 +13,7 @@ phases:
   pre_build:
     commands:
       #install dependencies
+      - echo Installing dependencies...
       - yarn
   build:
     commands:
@@ -24,4 +25,4 @@ artifacts:
   files:
     - "**/*"
   discard-paths: no
-  base-directory: dist
+  base-directory: build
