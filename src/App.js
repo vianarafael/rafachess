@@ -157,6 +157,10 @@ function App() {
           check[square] = square;
           return (
             <div
+              style={{
+                transform: (() =>
+                  playerColor === "black" ? "rotate(180deg)" : "")(),
+              }}
               id={`${indexRow}-${indexSquare}`}
               className={indexSquare % 2 === 0 ? firstColor : secondColor}
             >
