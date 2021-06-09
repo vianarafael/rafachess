@@ -222,7 +222,7 @@ function App() {
         </>
       ) : (
         <>
-          <p>Wait for your adversary</p>
+          <h1>Wait for your adversary...</h1>
         </>
       )}
     </>
