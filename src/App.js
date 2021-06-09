@@ -17,9 +17,7 @@ let socket;
 
 // socket = socketIOClient("https://rafachess.xyz");
 
-socket = socketIOClient(
-  "http://ec2-54-199-234-248.ap-northeast-1.compute.amazonaws.com:3000/"
-);
+socket = socketIOClient("https://backend-chess.herokuapp.com/");
 
 export const BoardContext = createContext();
 const resetBoard = [
