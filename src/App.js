@@ -17,7 +17,9 @@ let socket;
 
 // socket = socketIOClient("https://rafachess.xyz");
 
-socket = socketIOClient("http://18.222.135.190/");
+socket = socketIOClient(
+  "http://ec2-54-199-234-248.ap-northeast-1.compute.amazonaws.com:3000/"
+);
 
 export const BoardContext = createContext();
 const resetBoard = [
